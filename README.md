@@ -1,4 +1,5 @@
 editor-ui
 =========
 
-editor ui framework
+Editor UI Components
+
