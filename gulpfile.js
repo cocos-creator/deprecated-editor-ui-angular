@@ -13,7 +13,7 @@ var templateCache = require('gulp-angular-templatecache');
 var paths = {
     js: [ 
         'src/checkbox/checkbox.js', 
-        'src/unit-input/unit-input.js',
+        'src/unitinput/unitinput.js',
         'src/editor-ui.js',
     ],
     css: 'src/**/*.styl',

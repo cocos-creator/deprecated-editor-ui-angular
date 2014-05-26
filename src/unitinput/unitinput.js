@@ -1,8 +1,8 @@
 angular.module("fireUI.unitInput", [] )
-.directive( 'fireUiUnitInput', function () {
+.directive( 'fireUiUnitinput', function () {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'unit-input/unit-input.html',
+        templateUrl: 'unitinput/unitinput.html',
     };
 });
