@@ -1,4 +1,4 @@
-<html ng-app="test">
+<html ng-app="testApp">
 
 <head>
 <title>Editor-UI Test</title>
@@ -6,13 +6,24 @@
 <link rel="stylesheet" href="ext/fontawesome/css/font-awesome.css">
 <link rel="stylesheet" href="bin/editor-ui.css">
 
+<script src="ext/jquery/dist/jquery.min.js"></script>
 <script src="ext/angular/angular.min.js"></script>
 <script src="ext/angular-placeholders/angular-placeholders.js"></script>
 <script src="bin/editor-ui.js"></script>
 <script src="bin/editor-ui-templates.js"></script>
 
 <script>
-angular.module("test", ["placeholders", "fireUI"]);
+angular.module('testApp', ['placeholders', 'fireUI'])
+.run( [ '$rootScope', function($rootScope) {
+    console.log('start testApp');
+}])
+.controller('init', ['$scope', function ($scope) {
+    console.log('init');
+
+    $scope.isOpen = false;
+    $scope.pixel = 20;
+}])
+;
 </script>
 
 <style>
@@ -30,13 +41,23 @@ span.space {
 </head>
 
 <body>
-<fire-ui-checkbox></fire-ui-checkbox>    
-<span class="space"></span>              
-<fire-ui-unitinput></fire-ui-unitinput>
+<img class="img-polaroid" ph-img="64x64" />
 <span class="space"></span>              
 
-<img class="img-polaroid" ph-img="64x64" />
-<div ph-txt="1s"></div>
+<div ng-controller="init">
+    <fire-ui-checkbox fi-checked="isOpen"></fire-ui-checkbox>    
+    <span class="space"></span>              
+
+    <fire-ui-unitinput></fire-ui-unitinput>
+    <span class="space"></span>              
+
+    <fire-ui-dropdown></fire-ui-dropdown>
+    <span class="space"></span>              
+
+    <input type="checkbox" ng-model="isOpen">
+    is open {{isOpen}}
+</div>
+
 </body>
 
 </html>

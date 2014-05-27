@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 
+var gutil = require('gulp-util');
 var clean = require('gulp-clean');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
@@ -11,11 +12,14 @@ var vulcanize = require('gulp-vulcanize');
 var templateCache = require('gulp-angular-templatecache');
 
 var paths = {
-    js: [ 
+    js_in_order: [ 
+        'src/interactions/draggable.js',
         'src/checkbox/checkbox.js', 
         'src/unitinput/unitinput.js',
+        'src/dropdown/dropdown.js',
         'src/editor-ui.js',
     ],
+    js: 'src/**/*.js',
     css: 'src/**/*.styl',
     html: 'src/**/*.html',
 };
@@ -29,7 +33,7 @@ gulp.task('clean', function() {
 
 // js
 gulp.task('js', function() {
-    return gulp.src(paths.js, {base: 'src'})
+    return gulp.src(paths.js_in_order, {base: 'src'})
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(concat('editor-ui.js'))
@@ -42,7 +46,7 @@ gulp.task('js', function() {
 gulp.task('css', function() {
     return gulp.src('src/editor-ui.styl')
     .pipe(stylus({
-        compress: true,
+        compress: false,
         include: 'src'
     }))
     .pipe(gulp.dest('bin'))
@@ -62,9 +66,9 @@ gulp.task('html', function() {
 
 // watch
 gulp.task('watch', function() {
-    gulp.watch(paths.js, ['js']);
-    gulp.watch(paths.css, ['css']);
-    gulp.watch(paths.html, ['html']);
+    gulp.watch(paths.js, ['js']).on ( 'error', gutil.log );
+    gulp.watch(paths.css, ['css']).on ( 'error', gutil.log );
+    gulp.watch(paths.html, ['html']).on ( 'error', gutil.log );
 });
 
 // tasks
