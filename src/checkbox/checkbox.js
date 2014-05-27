@@ -14,6 +14,10 @@ angular.module("fireUI.checkbox", [] )
                 scope.$apply();
             })
             ;
+
+            scope.$on( '$destroy', function () {
+                element.off('click');
+            });
         },
     };
 });
