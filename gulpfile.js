@@ -41,6 +41,17 @@ gulp.task('js', function() {
     .pipe(gulp.dest('bin'))
     ;
 });
+// js-dev
+gulp.task('js-dev', function() {
+    return gulp.src(paths.js_in_order, {base: 'src'})
+    .pipe(jshint({
+        '-W087': true,
+    }))
+    .pipe(jshint.reporter(stylish))
+    .pipe(concat('editor-ui.js'))
+    .pipe(gulp.dest('bin'))
+    ;
+});
 
 // css
 gulp.task('css', function() {
@@ -66,7 +77,7 @@ gulp.task('html', function() {
 
 // watch
 gulp.task('watch', function() {
-    gulp.watch(paths.js, ['js']).on ( 'error', gutil.log );
+    gulp.watch(paths.js, ['js-dev']).on ( 'error', gutil.log );
     gulp.watch(paths.css, ['css']).on ( 'error', gutil.log );
     gulp.watch(paths.html, ['html']).on ( 'error', gutil.log );
 });

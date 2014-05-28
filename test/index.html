@@ -20,7 +20,7 @@ angular.module('testApp', ['placeholders', 'fireUI'])
 .controller('init', ['$scope', function ($scope) {
     console.log('init');
 
-    $scope.isOpen = false;
+    $scope.checked = false;
     $scope.pixel = 20;
 }])
 ;
@@ -32,6 +32,7 @@ body {
     background-color: #333;
     padding: 0px 100px;
     margin-top: 20px;
+    color: white;
 }
 span.space {
     height: 5px;
@@ -45,17 +46,19 @@ span.space {
 <span class="space"></span>              
 
 <div ng-controller="init">
-    <fire-ui-checkbox fi-checked="isOpen"></fire-ui-checkbox>    
-    <span class="space"></span>              
+    <fire-ui-checkbox fi-bind="checked"></fire-ui-checkbox>    
+    <span class="space"></span>                               
 
-    <fire-ui-unitinput></fire-ui-unitinput>
+    <fire-ui-unitinput fi-bind="pixel" fi-type="number" fi-unit="px"></fire-ui-unitinput>
     <span class="space"></span>              
 
     <fire-ui-dropdown></fire-ui-dropdown>
     <span class="space"></span>              
 
-    <input type="checkbox" ng-model="isOpen">
-    is open {{isOpen}}
+    <div>--------------------------------------------------</div>
+
+    <input type="checkbox" ng-model="checked"> checked = {{checked}} <br />
+    <input type="text" ng-model="pixel"> pixel = {{pixel}} <br />
 </div>
 
 </body>

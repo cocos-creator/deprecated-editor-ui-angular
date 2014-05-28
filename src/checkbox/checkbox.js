@@ -4,13 +4,13 @@ angular.module("fireUI.checkbox", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            checked: '=fiChecked',
+            bind: '=fiBind',
         },
         templateUrl: 'checkbox/checkbox.html',
         link: function (scope, element, attrs ) {
             element
             .on ( 'click', function () {
-                scope.checked = !scope.checked;
+                scope.bind = !scope.bind;
                 scope.$apply();
             })
             ;
