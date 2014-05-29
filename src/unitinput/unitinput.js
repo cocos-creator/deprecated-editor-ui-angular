@@ -10,10 +10,29 @@ angular.module("fireUI.unitInput", [] )
         },
         templateUrl: 'unitinput/unitinput.html',
         link: function (scope, element, attrs) {
-            scope.type = scope.type ?  scope.type : 'number';
+            scope.type = scope.type ?  scope.type : 'int';
             scope.unit = scope.unit ?  scope.unit : '';
 
             var input = element.children('#input');
+
+            //
+            var convert = function ( val ) {
+                switch ( scope.type ) {
+                    case 'int': 
+                        val = parseInt(val);
+                        if ( isNaN(val) ) 
+                            val = 0;
+                        return val;
+
+                    case 'float': 
+                        val = parseFloat(val);
+                        if ( isNaN(val) ) 
+                            val = 0;
+                        return val;
+                }
+                console.log("can't find proper type for " + scope.type);
+                return val;
+            };
             input.val(scope.bind);
 
             //
@@ -23,6 +42,11 @@ angular.module("fireUI.unitInput", [] )
                 element.addClass('focused');
             })
             .on('focusout', function() {
+                scope.$apply( function () {
+                    if ( scope.bind !== scope.lastVal ) {
+                        scope.bind = convert(scope.bind);
+                    }
+                } );
                 element.removeClass('focused');
             })
             ;
@@ -32,32 +56,46 @@ angular.module("fireUI.unitInput", [] )
                 input.focus();
             };
 
-            //
             scope.onIncrease = function () {
-                scope.bind += 1;
-            };
-            scope.onDecrease = function () {
-                scope.bind -= 1;
+                scope.bind = convert( scope.bind + 1 );
             };
 
-            //
-            scope.onInputClick = function () {
-                input.select();
+            scope.onDecrease = function () {
+                scope.bind = convert( scope.bind - 1 );
             };
-            scope.onInputKeydown = function () {
+
+            input
+            .on ( 'input', function () {
+                scope.bind = input.val();
+                scope.$apply();
+            } )
+            .on ( 'click', function () {
+                input.select();
+            } )
+            .on ( 'keydown', function () {
                 switch ( event.which ) {
                     // enter
                     case 13:
+                        scope.bind = convert(scope.bind);
+                        scope.$apply();
                         input.blur(); 
                     break;
 
                     // esc
                     case 27:
-                        scope.bind = scope.lastVal;
+                        scope.bind = convert(scope.lastVal);
+                        scope.$apply();
                         input.blur(); 
                     break;
                 }
-            };
+            } )
+            ;
+
+            scope.$watch ( 'bind', function ( val, old ) {
+                if ( val !== old ) {
+                    input.val(val);
+                }
+            });
         },
     };
 });
