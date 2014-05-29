@@ -13,12 +13,7 @@ angular.module("fireUI.unitInput", [] )
             scope.type = scope.type ?  scope.type : 'number';
             scope.unit = scope.unit ?  scope.unit : '';
 
-            var unit = element.children('.unit');
-            var input = element.children('.input');
-            var unitButtons = element.children('.unit-buttons');
-            var btnUp = unitButtons.children('#up');
-            var btnDown = unitButtons.children('#down');
-
+            var input = element.children('#input');
             input.val(scope.bind);
 
             //
@@ -33,37 +28,23 @@ angular.module("fireUI.unitInput", [] )
             ;
 
             //
-            unit
-            .on('click', function() {
+            scope.onUnitClick = function () {
                 input.focus();
-            })
-            ;
+            };
 
             //
-            btnUp
-            .on('click', function() {
+            scope.onIncrease = function () {
                 scope.bind += 1;
-                scope.$apply();
-            })
-            ;
-
-            btnDown
-            .on('click', function() {
+            };
+            scope.onDecrease = function () {
                 scope.bind -= 1;
-                scope.$apply();
-            })
-            ;
+            };
 
             //
-            input
-            .on('input', function(event) {
-                scope.bind = input.val();
-                scope.$apply();
-            })
-            .on('click', function(event) {
+            scope.onInputClick = function () {
                 input.select();
-            })
-            .on('keydown', function(event) {
+            };
+            scope.onInputKeydown = function () {
                 switch ( event.which ) {
                     // enter
                     case 13:
@@ -73,20 +54,10 @@ angular.module("fireUI.unitInput", [] )
                     // esc
                     case 27:
                         scope.bind = scope.lastVal;
-                        scope.$apply();
-
                         input.blur(); 
                     break;
                 }
-            })
-            ;
-
-            scope.$watch('bind', function( val, old ) {
-                if ( val !== old ) {
-                    input.val(val);
-                }
-            })
-            ;
+            };
         },
     };
 });

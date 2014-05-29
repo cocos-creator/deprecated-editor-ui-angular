@@ -1,9 +1,16 @@
 <div class="fire-ui-unitinput">
-    <input class="input" type="text" tabindex="1" placeholder="-">
-    <span class="unit">{{unit}}</span>
+    <input id="input" class="input" 
+    type="text" 
+    tabindex="1" 
+    placeholder="-" 
+    ng-model="bind"
+    ng-click="onInputClick()"
+    ng-keydown="onInputKeydown()"
+    >
+    <span class="unit" ng-click="onUnitClick()">{{unit}}</span>
     <div class="unit-buttons">
-        <button id="up" class="button"><i class="fa fa-caret-up"></i></button>
+        <button class="button" ng-click="onIncrease()"><i class="fa fa-caret-up"></i></button>
         <span class="sep"></span>
-        <button id="down" class="button"><i class="fa fa-caret-down"></i></button>
+        <button class="button" ng-click="onDecrease()"><i class="fa fa-caret-down"></i></button>
     </div>
 </div>

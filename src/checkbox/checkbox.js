@@ -8,16 +8,9 @@ angular.module("fireUI.checkbox", [] )
         },
         templateUrl: 'checkbox/checkbox.html',
         link: function (scope, element, attrs ) {
-            element
-            .on ( 'click', function () {
+            scope.onClick = function () {
                 scope.bind = !scope.bind;
-                scope.$apply();
-            })
-            ;
-
-            scope.$on( '$destroy', function () {
-                element.off('click');
-            });
+            };
         },
     };
 });
