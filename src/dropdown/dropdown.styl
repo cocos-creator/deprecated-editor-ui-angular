@@ -6,18 +6,6 @@
 
     cursor: pointer 
 
-    &:hover {
-        .border {
-            background-color: #545454
-            border-color: rgba(255,255,255,0.13)
-            border-top-color: rgba(255, 255, 255, 0.28)
-
-            i {                         
-                opacity: 1.0
-            }
-        }
-    }
-
     .border {
         display-flexbox()
         flex-direction: row
@@ -44,17 +32,27 @@
             opacity: 0.5
             cursor: inherit 
         }
+
+        &:hover {
+            background-color: #545454
+            border-color: rgba(255,255,255,0.13)
+            border-top-color: rgba(255, 255, 255, 0.28)
+
+            i {                         
+                opacity: 1.0
+            }
+        }
     }
 
     .menu {
-        duration = .3s
+        menuDuration = .3s
+        itemDuration = .2s
 
         visibility: visible
         position: absolute
         z-index: 11
         min-width: 100%
         outline: 1px solid #222
-        padding: 3px 4px
         margin-top: 1px
 
         color: #bdbdbd
@@ -62,13 +60,25 @@
         box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)
         opacity: 1.0
 
-        transition: opacity duration ease
+        transition: opacity menuDuration ease
 
         &.hide {
             visibility: hidden
             opacity: 0.0
 
-            transition: visibility 0s ease duration, opacity duration ease
+            transition: visibility 0s ease menuDuration, opacity menuDuration ease
+        }
+
+        & .item {
+            padding: 3px 4px
+            border: 1px solid rgba(255, 255, 255, 0)
+            transition: background-color itemDuration ease
+            &:hover {
+                background-color: #545454
+                border-color: rgba(255, 255, 255, 0.13)
+                border-top-color: rgba(255, 255, 255, 0.28)
+                transition: background-color 0s ease
+            }
         }
     }
 }

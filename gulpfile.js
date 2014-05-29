@@ -84,3 +84,4 @@ gulp.task('watch', function() {
 
 // tasks
 gulp.task('default', ['js', 'css', 'html'] );
+gulp.task('all', ['default'] );

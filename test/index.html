@@ -22,6 +22,7 @@ angular.module('testApp', ['placeholders', 'fireUI'])
 
     $scope.checked = false;
     $scope.pixel = 20;
+    $scope.dropDown = 512;
 }])
 ;
 </script>
@@ -52,14 +53,15 @@ span.space {
     <fire-ui-unitinput fi-bind="pixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
     <span class="space"></span>              
 
-    <fire-ui-dropdown></fire-ui-dropdown>
+    <fire-ui-dropdown fi-bind="dropDown"></fire-ui-dropdown>
     <span class="space"></span>              
 
-    <div>--------------------------------------------------</div>
+    <hr />
 
     <input type="checkbox" ng-model="checked"> checked = {{checked}} <br />
     <input type="text" ng-model="pixel"> pixel = {{pixel}} <br />
-
+    <input type="text" ng-model="dropDown"> dropDown = {{dropDown}} <br />
+    
     <div id="foo-b">
         <div id="foo-a">
         </div>
