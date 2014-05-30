@@ -1,19 +1,11 @@
 <div class="fire-ui-dropdown" tabindex="1">
     <div class="border">
-        <span>{{bind}}</span>
+        <span>{{options[bind].name}}</span>
         <i class="fa fa-caret-down"></i>
     </div>
     <div class="menu hide">
-        <div class="item" ng-repeat="item in [
-            '64',
-            '128',
-            '256',
-            '512',
-            '1024',
-            '2048',
-            '4096'
-        ]">
-            {{item}}
+        <div class="item" ng-repeat="item in options" ng-click="onSelect($index,$event);">
+            {{item.name}}
         </div>
     </div>
 </div>

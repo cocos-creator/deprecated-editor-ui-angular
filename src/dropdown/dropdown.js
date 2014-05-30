@@ -5,44 +5,41 @@ angular.module("fireUI.dropdown", [] )
         replace: true,
         scope: {
             bind: '=fiBind',
+            options: '=fiOptions',
         },
         templateUrl: 'dropdown/dropdown.html',
         link: function (scope, element, attrs) {
             var menu = element.children('.menu');
+
             element
             .on ( 'click', function () {
-                if ( menu.length !== 0 ) {
-                    menu.toggleClass('hide');
-                }
-                else {
-                    console.log('.menu not found');
-                }
+                menu.toggleClass('hide');
             })
             .on ( 'focusout', function () {
-                if ( menu.length !== 0 ) {
-                    if ( menu.hasClass('hide') === false ) {
-                        menu.addClass('hide');
-                    }
-                }
+                menu.addClass('hide');
             })
             ;
 
-            // bind click event to ng-repeated element
-            var stopWatch = scope.$watch(menu.children(), function() {
-                var item = menu.children('.item');
-                if (item.length !== 0) {
-                    item.on ( 'click', function (e) {
-                        if (e.target) {
-                            scope.bind = e.target.innerHTML;
-                            scope.$apply();
-                        }
-                    });
-                }
-                else {
-                    console.log('.item not found');
-                }
-                stopWatch();
-            });
+            //
+            scope.onSelect = function ( idx, event ) {
+                var opt = scope.options[idx];
+                scope.bind = opt.value;
+                scope.updateSelected(idx);
+
+                menu.addClass('hide');
+                event.stopPropagation();
+            };
+            scope.updateSelected = function ( idx ) {
+                var items = menu.children('.item');
+                items.each( function ( index ) {
+                    if ( index === idx ) {
+                        $(this).addClass("selected");
+                    }
+                    else {
+                        $(this).removeClass("selected");
+                    }
+                } );
+            };
         },
     };
 });

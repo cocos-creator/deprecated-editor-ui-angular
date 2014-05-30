@@ -66,7 +66,9 @@ angular.module("fireUI.unitInput", [] )
 
             input
             .on ( 'input', function () {
-                scope.bind = input.val();
+                var val = convert(input.val());
+                input.val(val);
+                scope.bind = val;
                 scope.$apply();
             } )
             .on ( 'click', function () {
