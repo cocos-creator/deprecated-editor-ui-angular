@@ -5,5 +5,5 @@ angular.module("fireUI", [
     // widgets
     "fireUI.unitInput",
     "fireUI.checkbox",
-    "fireUI.dropdown",
+    "fireUI.select",
 ]);

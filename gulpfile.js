@@ -16,7 +16,7 @@ var paths = {
         'src/interactions/draggable.js',
         'src/checkbox/checkbox.js', 
         'src/unitinput/unitinput.js',
-        'src/dropdown/dropdown.js',
+        'src/select/select.js',
         'src/editor-ui.js',
     ],
     js: 'src/**/*.js',

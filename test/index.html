@@ -22,8 +22,8 @@ angular.module('testApp', ['placeholders', 'fireUI'])
 
     $scope.checked = false;
     $scope.pixel = 20;
-    $scope.dropDown = 3;
-    $scope.dropDownList = [
+    $scope.select = 3;
+    $scope.selectList = [
     { name: '64',   value: 0 },
     { name: '128',  value: 1 },
     { name: '256',  value: 2 },
@@ -62,11 +62,11 @@ span.space {
     <fire-ui-unitinput fi-bind="pixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
     <span class="space"></span>              
 
-    <fire-ui-dropdown 
-        fi-bind="dropDown" 
-        fi-options="dropDownList"
+    <fire-ui-select 
+        fi-bind="select" 
+        fi-options="selectList"
     >
-    </fire-ui-dropdown>
+    </fire-ui-select>
     <span class="space"></span>              
 
     <hr />
@@ -79,8 +79,8 @@ span.space {
     pixel = {{pixel}}
     <br />
 
-    <select ng-model="dropDown" ng-options="item.value as item.name for item in dropDownList"></select> 
-    dropDown = {{dropDown}}
+    <select ng-model="select" ng-options="item.value as item.name for item in selectList"></select> 
+    select = {{select}}
     <br />
 </div>
 </body>
