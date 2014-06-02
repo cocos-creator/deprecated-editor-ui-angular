@@ -13,6 +13,14 @@
 <script src="bin/editor-ui-templates.js"></script>
 
 <script>
+
+function rangeRandom (min, max) {
+    return Math.random() * (max - min) + min;
+}
+function rangeRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 angular.module('testApp', ['placeholders', 'fireUI'])
 .run( [ '$rootScope', function($rootScope) {
     console.log('start testApp');
@@ -20,10 +28,18 @@ angular.module('testApp', ['placeholders', 'fireUI'])
 .controller('init', ['$scope', function ($scope) {
     console.log('init');
 
-    $scope.checked = false;
-    $scope.pixel = 20;
-    $scope.select = 3;
-    $scope.selectList = [
+    $scope.myChecked = false;
+    $scope.myCheckedClick = function () {
+        $scope.myChecked = !$scope.myChecked;
+    };
+
+    $scope.myPixel = 20;
+    $scope.myPixelClick = function () {
+        $scope.myPixel = rangeRandomInt(-1000, 1000);
+    };
+
+    $scope.mySelect = 3;
+    $scope.mySelectList = [
     { name: '64',   value: 0 },
     { name: '128',  value: 1 },
     { name: '256',  value: 2 },
@@ -32,6 +48,9 @@ angular.module('testApp', ['placeholders', 'fireUI'])
     { name: '2048', value: 5 },
     { name: '4096', value: 6 },
     ];
+    $scope.mySelectClick = function () {
+        $scope.mySelect = $scope.mySelectList[rangeRandomInt(0,6)].value;
+    };
 }])
 ;
 </script>
@@ -52,36 +71,27 @@ span.space {
 </head>
 
 <body>
-<img class="img-polaroid" ph-img="64x64" />
-<span class="space"></span>              
-
 <div ng-controller="init">
-    <fire-ui-checkbox fi-bind="checked"></fire-ui-checkbox>    
+
+    <button ng-click="myCheckedClick()">Change</button> myChecked = {{myChecked}} <br/>
+    <button ng-click="myPixelClick()">Change</button> myPixel = {{myPixel}} <br/>
+    <button ng-click="mySelectClick()">Change</button> mySelect = {{mySelect}} <br/>
+
+    <hr />
+    <span class="space" style="height: 20px"></span>
+
+    <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>    
     <span class="space"></span>                               
 
-    <fire-ui-unitinput fi-bind="pixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
+    <fire-ui-unitinput fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
     <span class="space"></span>              
 
     <fire-ui-select 
-        fi-bind="select" 
-        fi-options="selectList"
+        fi-bind="mySelect" 
+        fi-options="mySelectList"
     >
     </fire-ui-select>
     <span class="space"></span>              
-
-    <hr />
-
-    <input type="checkbox" ng-model="checked">
-    checked = {{checked}} 
-    <br />
-
-    <input type="text" ng-model="pixel"> 
-    pixel = {{pixel}}
-    <br />
-
-    <select ng-model="select" ng-options="item.value as item.name for item in selectList"></select> 
-    select = {{select}}
-    <br />
 </div>
 </body>
 

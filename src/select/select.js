@@ -11,26 +11,32 @@ angular.module("fireUI.select", [] )
         link: function (scope, element, attrs) {
             var menu = element.children('.menu');
 
-            var getValueName = function () {
+            var updateValueName = function () {
                 for ( var i = 0; i < scope.options.length; ++i ) {
                     var entry = scope.options[i];
                     if ( entry.value === scope.value ) {
-                        return entry.name;
+                        scope.valueName = entry.name;
+                        break;
                     }
                 }
             };
-            scope.valueName = getValueName();
+            updateValueName ();
 
             //
             scope.onSelect = function ( event ) {
                 var idx = parseInt(event.target.getAttribute('index'));
                 var entry = scope.options[idx];
                 scope.value = entry.value;
-                scope.valueName = entry.name;
 
                 menu.addClass('hide');
                 event.stopPropagation();
             };
+
+            scope.$watch( 'value', function ( val, old ) {
+                if ( val !== old ) {
+                    updateValueName ();
+                }
+            } );
 
             //
             element
