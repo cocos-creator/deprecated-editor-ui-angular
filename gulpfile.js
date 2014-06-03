@@ -15,10 +15,17 @@ var paths = {
     js_in_order: [ 
         'src/interactions/draggable.js',
         'src/checkbox/checkbox.js', 
-        'src/unitinput/unitinput.js',
+        'src/color/color.js', 
+        'src/color-picker/color-picker.js', 
         'src/select/select.js',
+        'src/unitinput/unitinput.js',
+
         'src/editor-ui.js',
     ],
+    ext_js: [ 
+        '../core/bin/**/*.js',
+    ],
+    img: 'src/img/**/*',
     js: 'src/**/*.js',
     css: 'src/**/*.styl',
     html: 'src/**/*.html',
@@ -28,6 +35,18 @@ var paths = {
 gulp.task('clean', function() {
     return gulp.src('bin/**/*', {read: false})
     .pipe(clean())
+    ;
+});
+
+// copy
+gulp.task('cp-ext', function() {
+    return gulp.src(paths.ext_js)
+    .pipe(gulp.dest('bin'))
+    ;
+});
+gulp.task('cp-img', function() {
+    return gulp.src(paths.img)
+    .pipe(gulp.dest('bin'))
     ;
 });
 
@@ -77,11 +96,13 @@ gulp.task('html', function() {
 
 // watch
 gulp.task('watch', function() {
+    gulp.watch(paths.ext_js, ['cp-ext']).on ( 'error', gutil.log );
+    gulp.watch(paths.img, ['cp-img']).on ( 'error', gutil.log );
     gulp.watch(paths.js, ['js-dev']).on ( 'error', gutil.log );
     gulp.watch(paths.css, ['css']).on ( 'error', gutil.log );
     gulp.watch(paths.html, ['html']).on ( 'error', gutil.log );
 });
 
 // tasks
-gulp.task('default', ['js', 'css', 'html'] );
+gulp.task('default', ['cp-ext', 'cp-img', 'js', 'css', 'html'] );
 gulp.task('all', ['default'] );

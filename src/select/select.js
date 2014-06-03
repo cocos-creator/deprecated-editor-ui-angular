@@ -40,13 +40,19 @@ angular.module("fireUI.select", [] )
 
             //
             element
-            .on ( 'click', function () {
+            .on('click', function () {
                 menu.toggleClass('hide');
                 scope.$apply();
             })
-            .on ( 'focusout', function () {
+            .on('focusout', function () {
                 menu.addClass('hide');
                 scope.$apply();
+            })
+            .on('focusin', function() {
+                element.addClass('focused');
+            })
+            .on('focusout', function() {
+                element.removeClass('focused');
             })
             ;
         },

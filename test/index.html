@@ -9,14 +9,15 @@
 <script src="ext/jquery/dist/jquery.min.js"></script>
 <script src="ext/angular/angular.min.js"></script>
 <script src="ext/angular-placeholders/angular-placeholders.js"></script>
+<script src="bin/core.min.js"></script>
 <script src="bin/editor-ui.js"></script>
 <script src="bin/editor-ui-templates.js"></script>
 
 <script>
-
 function rangeRandom (min, max) {
     return Math.random() * (max - min) + min;
 }
+
 function rangeRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -28,28 +29,40 @@ angular.module('testApp', ['placeholders', 'fireUI'])
 .controller('init', ['$scope', function ($scope) {
     console.log('init');
 
+    // myChecked
     $scope.myChecked = false;
     $scope.myCheckedClick = function () {
         $scope.myChecked = !$scope.myChecked;
     };
 
+    // myPixel
     $scope.myPixel = 20;
     $scope.myPixelClick = function () {
         $scope.myPixel = rangeRandomInt(-1000, 1000);
     };
 
+    // mySelect
     $scope.mySelect = 3;
     $scope.mySelectList = [
-    { name: '64',   value: 0 },
-    { name: '128',  value: 1 },
-    { name: '256',  value: 2 },
-    { name: '512',  value: 3 },
-    { name: '1024', value: 4 },
-    { name: '2048', value: 5 },
-    { name: '4096', value: 6 },
+    { name: 'Hello',   value: 0 },
+    { name: 'Foo',  value: 1 },
+    { name: 'Bar',  value: 2 },
+    { name: 'Johnny',  value: 3 },
+    { name: 'Test Math', value: 4 },
+    { name: 'Foo Bar', value: 5 },
+    { name: 'This is the world', value: 6 },
     ];
     $scope.mySelectClick = function () {
         $scope.mySelect = $scope.mySelectList[rangeRandomInt(0,6)].value;
+    };
+
+    // myColor
+    $scope.myColor = new FIRE.Color( 1.0, 0.0, 0.0, 1.0 );
+    $scope.myColorClick = function () {
+        $scope.myColor.r = rangeRandom( 0.0, 1.0 );
+        $scope.myColor.g = rangeRandom( 0.0, 1.0 );
+        $scope.myColor.b = rangeRandom( 0.0, 1.0 );
+        $scope.myColor.a = rangeRandom( 0.0, 1.0 );
     };
 }])
 ;
@@ -76,6 +89,7 @@ span.space {
     <button ng-click="myCheckedClick()">Change</button> myChecked = {{myChecked}} <br/>
     <button ng-click="myPixelClick()">Change</button> myPixel = {{myPixel}} <br/>
     <button ng-click="mySelectClick()">Change</button> mySelect = {{mySelect}} <br/>
+    <button ng-click="myColorClick()">Change</button> myColor = {{myColor.toString()}} <br/>
 
     <hr />
     <span class="space" style="height: 20px"></span>
@@ -83,15 +97,17 @@ span.space {
     <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>    
     <span class="space"></span>                               
 
-    <fire-ui-unitinput fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
+    <fire-ui-unitinput fi-bind="myPixel" fi-type="int" fi-unit="%"></fire-ui-unitinput>
     <span class="space"></span>              
 
-    <fire-ui-select 
-        fi-bind="mySelect" 
-        fi-options="mySelectList"
-    >
-    </fire-ui-select>
+    <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>
     <span class="space"></span>              
+
+    <fire-ui-color fi-bind="myColor"></fire-ui-color>
+    <span class="space"></span>                      
+
+    <fire-ui-color-picker fi-color="myColor"></fire-ui-color-picker>
+    <span class="space"></span>                      
 </div>
 </body>
 
