@@ -14,8 +14,6 @@ angular.module("fireUI.unitInput", [] )
             scope.unit = scope.unit ? scope.unit : '';
 
             var input = element.children('#input');
-
-            //
             var convert = function ( val ) {
                 switch ( scope.type ) {
                     case 'int': 
@@ -35,23 +33,7 @@ angular.module("fireUI.unitInput", [] )
             };
             input.val(scope.bind);
 
-            //
-            element
-            .on('focusin', function() {
-                scope.lastVal = scope.bind;
-                element.addClass('focused');
-            })
-            .on('focusout', function() {
-                scope.$apply( function () {
-                    if ( scope.bind !== scope.lastVal ) {
-                        scope.bind = convert(scope.bind);
-                    }
-                } );
-                element.removeClass('focused');
-            })
-            ;
-
-            //
+            // scope
             scope.onUnitClick = function () {
                 input.focus();
             };
@@ -64,6 +46,13 @@ angular.module("fireUI.unitInput", [] )
                 scope.bind = convert( scope.bind - 1 );
             };
 
+            scope.$watch ( 'bind', function ( val, old ) {
+                if ( val !== old ) {
+                    input.val(val);
+                }
+            });
+
+            // input
             input
             .on ( 'input', function () {
                 var val = convert(input.val());
@@ -93,11 +82,21 @@ angular.module("fireUI.unitInput", [] )
             } )
             ;
 
-            scope.$watch ( 'bind', function ( val, old ) {
-                if ( val !== old ) {
-                    input.val(val);
-                }
-            });
+            // element
+            element
+            .on('focusin', function() {
+                scope.lastVal = scope.bind;
+                element.addClass('focused');
+            })
+            .on('focusout', function() {
+                scope.$apply( function () {
+                    if ( scope.bind !== scope.lastVal ) {
+                        scope.bind = convert(scope.bind);
+                    }
+                } );
+                element.removeClass('focused');
+            })
+            ;
         },
     };
 });

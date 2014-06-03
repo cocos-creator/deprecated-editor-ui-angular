@@ -3,7 +3,9 @@ angular.module("fireUI", [
     "fireUI.draggable",
 
     // widgets
-    "fireUI.unitInput",
     "fireUI.checkbox",
-    "fireUI.dropdown",
+    "fireUI.color",
+    "fireUI.colorPicker",
+    "fireUI.select",
+    "fireUI.unitInput",
 ]);
