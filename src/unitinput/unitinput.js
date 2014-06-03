@@ -10,8 +10,8 @@ angular.module("fireUI.unitInput", [] )
         },
         templateUrl: 'unitinput/unitinput.html',
         link: function (scope, element, attrs) {
-            scope.type = scope.type ?  scope.type : 'int';
-            scope.unit = scope.unit ?  scope.unit : '';
+            scope.type = scope.type ? scope.type : 'int';
+            scope.unit = scope.unit ? scope.unit : '';
 
             var input = element.children('#input');
 
