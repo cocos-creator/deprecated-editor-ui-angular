@@ -6,12 +6,14 @@ angular.module("fireUI.unitInput", [] )
         scope: {
             type: '@fiType',
             unit: '@fiUnit',
+            precision: '@fiPrecision',
             bind: '=fiBind',
         },
         templateUrl: 'unitinput/unitinput.html',
         link: function (scope, element, attrs) {
             scope.type = scope.type ? scope.type : 'int';
             scope.unit = scope.unit ? scope.unit : '';
+            var precision = scope.precision ? parseInt(scope.precision) : 2;
 
             var input = element.children('#input');
             var convert = function ( val ) {
@@ -23,7 +25,7 @@ angular.module("fireUI.unitInput", [] )
                         return val;
 
                     case 'float': 
-                        val = parseFloat(val);
+                        val = parseFloat(parseFloat(val).toFixed(precision));
                         if ( isNaN(val) ) 
                             val = 0;
                         return val;
@@ -31,7 +33,7 @@ angular.module("fireUI.unitInput", [] )
                 console.log("can't find proper type for " + scope.type);
                 return val;
             };
-            input.val(scope.bind);
+            input.val(convert(scope.bind));
 
             // scope
             scope.onUnitClick = function () {
@@ -47,16 +49,18 @@ angular.module("fireUI.unitInput", [] )
             };
 
             scope.$watch ( 'bind', function ( val, old ) {
-                if ( val !== old ) {
-                    input.val(val);
-                }
+                input.val(convert(val));
+            });
+
+            scope.$on('$destroy', function () {
+                input.off();
+                element.off();
             });
 
             // input
             input
             .on ( 'input', function () {
                 var val = convert(input.val());
-                input.val(val);
                 scope.bind = val;
                 scope.$apply();
             } )
@@ -67,8 +71,9 @@ angular.module("fireUI.unitInput", [] )
                 switch ( event.which ) {
                     // enter
                     case 13:
-                        scope.bind = convert(scope.bind);
+                        scope.bind = convert(input.val());
                         scope.$apply();
+                        input.val(scope.bind);
                         input.blur(); 
                     break;
 
@@ -76,6 +81,7 @@ angular.module("fireUI.unitInput", [] )
                     case 27:
                         scope.bind = convert(scope.lastVal);
                         scope.$apply();
+                        input.val(scope.bind);
                         input.blur(); 
                     break;
                 }
@@ -89,11 +95,11 @@ angular.module("fireUI.unitInput", [] )
                 element.addClass('focused');
             })
             .on('focusout', function() {
-                scope.$apply( function () {
-                    if ( scope.bind !== scope.lastVal ) {
-                        scope.bind = convert(scope.bind);
-                    }
-                } );
+                var val = convert(input.val());
+                scope.bind = val;
+                scope.$apply();
+                input.val(val);
+
                 element.removeClass('focused');
             })
             ;

@@ -32,6 +32,10 @@ angular.module("fireUI.color", [] )
                 updateColor();
             }); 
 
+            scope.$on('$destroy', function () {
+                element.off();
+            });
+
             // element
             element
             .on('focusin', function() {

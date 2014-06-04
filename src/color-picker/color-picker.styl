@@ -1,11 +1,91 @@
 .fire-ui-color-picker {
     position: relative
+    padding: 10px
+    display: inline-block
 
-    height: 100px
-    width: 100px
-    border: 1px solid black
+    outline: 1px solid #222
+    color: #bdbdbd
+    background-color: #474747
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)
 
-    background: #232323
-    color: #ddd
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1), 0px 0 0 1px rgba(255,255,255,0.1)
+    span.space {
+        height: 5px;
+    }
+
+    .hue {
+        position: relative
+        display: inline-block
+        width: 20px
+        height: 150px
+        border: 1px solid black
+        margin-right: 6px
+
+        cursor: crosshair
+
+        background-image: url('color-picker.png')
+        background-position: 0px 0px
+
+        .handle {
+            position: absolute
+            color: white
+
+            i {
+                position: absolute
+                font-size: 12px
+                top: -6px
+                left: -6px
+            }
+        }
+    }
+
+    .color {
+        position: relative
+        display: inline-block
+        width: 150px
+        height: 150px
+        border: 1px solid black
+        margin-right: 6px
+
+        cursor: crosshair
+
+        background-image: url('color-picker.png')
+        background-position: -40px 0px
+
+        .handle {
+            position: absolute
+            color: black
+
+            i {
+                position: absolute
+                font-size: 14px
+                top: -7px
+                left: -7px
+            }
+        }
+    }
+
+    .opacity {
+        position: relative
+        display: inline-block
+        width: 20px
+        height: 150px
+        border: 1px solid black
+
+        cursor: crosshair
+
+        background-image: url('color-picker.png')
+        background-position: -20px 0px
+
+        .handle {
+            position: absolute
+            color: white
+
+            i {
+                position: absolute
+                font-size: 12px
+                top: -6px
+                left: -6px
+            }
+        }
+    }
 }

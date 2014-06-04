@@ -1,2 +1,32 @@
 <div class="fire-ui-color-picker" tabindex="1">
+    <div id="hue" class="hue">
+        <div id="hue-handle" class="handle">
+            <i class="fa fa-caret-right"></i>
+        </div>
+    </div>
+
+    <div id="color" class="color">
+        <div id="color-handle" class="handle">
+            <i style="color: white;" class="fa fa-circle-o"></i>
+            <i style="color: black;" class="fa fa-circle-thin"></i>
+        </div>
+    </div>
+
+    <div id="opacity" class="opacity">
+        <div id="opacity-handle" class="handle">
+            <i class="fa fa-caret-right"></i>
+        </div>
+    </div>
+
+    <span class="space"></span>
+    <fire-ui-unitinput fi-bind="rgb.r" fi-type="int" fi-unit="r"></fire-ui-unitinput>
+
+    <span class="space"></span>
+    <fire-ui-unitinput fi-bind="rgb.g" fi-type="int" fi-unit="g"></fire-ui-unitinput>
+
+    <span class="space"></span>
+    <fire-ui-unitinput fi-bind="rgb.b" fi-type="int" fi-unit="b"></fire-ui-unitinput>
+
+    <span class="space"></span>
+    <fire-ui-unitinput fi-bind="alpha" fi-type="float" fi-precision="2" fi-unit="alpha"></fire-ui-unitinput>
 </div>

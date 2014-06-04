@@ -38,6 +38,10 @@ angular.module("fireUI.select", [] )
                 }
             } );
 
+            scope.$on('$destroy', function () {
+                element.off();
+            });
+
             //
             element
             .on('click', function () {
@@ -54,6 +58,14 @@ angular.module("fireUI.select", [] )
             .on('focusout', function() {
                 element.removeClass('focused');
             })
+            .on ( 'keydown', function () {
+                switch ( event.which ) {
+                    // esc
+                    case 27:
+                        element.blur(); 
+                    break;
+                }
+            } )
             ;
         },
     };
