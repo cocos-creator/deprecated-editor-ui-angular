@@ -10,6 +10,7 @@ angular.module("fireUI.colorPicker", [] )
         templateUrl: 'color-picker/color-picker.html',
         link: function ( scope, element, attrs ) {
             var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
+            var rgbUpdated = false;
             scope.rgb = {
                 r: _rgb.r * 255 | 0 ,
                 g: _rgb.g * 255 | 0 ,
@@ -32,7 +33,7 @@ angular.module("fireUI.colorPicker", [] )
                 hueHandle.css( "top", parseInt((1.0-scope.hsv.h/360)*100,10) + "%" );
                 colorHandle.css({
                     left: parseInt(scope.hsv.s,10) + "%",
-                    top: parseInt((100-scope.hsv.b),10) + "%"
+                    top: parseInt((100-scope.hsv.v),10) + "%"
                 });
             };
 
@@ -44,12 +45,12 @@ angular.module("fireUI.colorPicker", [] )
                 'hsv.s', 
                 'hsv.v', 
             ], function ( val, old ) {
-                // var _rgb = FIRE.hsv2rgb(val[0], val[1], val[2]);
-                // scope.rgb = {
-                //     r: _rgb.r * 255 | 0 ,
-                //     g: _rgb.g * 255 | 0 ,
-                //     b: _rgb.b * 255 | 0 ,
-                // };
+                var _rgb = FIRE.hsv2rgb(val[0], val[1], val[2]);
+                scope.rgb = {
+                    r: _rgb.r * 255 | 0,
+                    g: _rgb.g * 255 | 0,
+                    b: _rgb.b * 255 | 0,
+                };
                 updateColor();
             }); 
 
@@ -92,12 +93,6 @@ angular.module("fireUI.colorPicker", [] )
 
                 scope.$apply( function () {
                     scope.hsv.h = (1.0 - offsetY) * 360.0;
-                    var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
-                    scope.rgb = {
-                        r: _rgb.r * 255 | 0,
-                        g: _rgb.g * 255 | 0,
-                        b: _rgb.b * 255 | 0,
-                    };
                 });
 
                 $(document).on ( 'mousemove', function ( event ) {
@@ -106,12 +101,6 @@ angular.module("fireUI.colorPicker", [] )
 
                     scope.$apply( function () {
                         scope.hsv.h = (1.0 - offsetY) * 360.0;
-                        var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
-                        scope.rgb = {
-                            r: _rgb.r * 255 | 0,
-                            g: _rgb.g * 255 | 0,
-                            b: _rgb.b * 255 | 0,
-                        };
                     });
 
                     return false;
