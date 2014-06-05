@@ -64,6 +64,15 @@ angular.module('testApp', ['placeholders', 'fireUI'])
         $scope.myColor.b = rangeRandom( 0.0, 1.0 );
         $scope.myColor.a = rangeRandom( 0.0, 1.0 );
     };
+    $scope.myHSV = $scope.myColor.toHSV();
+    $scope.$watchGroup( ['myColor.r', 'myColor.g', 'myColor.b'], 
+                        function ( val, old ) {
+                            $scope.myHSV = $scope.myColor.toHSV();
+                        } );
+    $scope.$watchGroup( ['myHSV.h', 'myHSV.s', 'myHSV.v'], 
+                        function ( val, old ) {
+                            $scope.myColor.fromHSV( val[0], val[1], val[2] );
+                        } );
 }])
 ;
 </script>
@@ -106,7 +115,7 @@ span.space {
     <fire-ui-color fi-bind="myColor"></fire-ui-color>
     <span class="space"></span>                      
 
-    <fire-ui-color-picker fi-color="myColor"></fire-ui-color-picker>
+    <fire-ui-color-picker fi-hsv="myHSV" fi-alpha="myColor.a"></fire-ui-color-picker>
     <span class="space"></span>                      
 </div>
 </body>

@@ -4,16 +4,17 @@ angular.module("fireUI.colorPicker", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            color: '=fiColor',
+            hsv: '=fiHsv',
+            alpha: '=fiAlpha',
         },
         templateUrl: 'color-picker/color-picker.html',
         link: function ( scope, element, attrs ) {
+            var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
             scope.rgb = {
-                r: scope.color.r * 255,
-                g: scope.color.g * 255,
-                b: scope.color.b * 255,
+                r: _rgb.r * 255 | 0 ,
+                g: _rgb.g * 255 | 0 ,
+                b: _rgb.b * 255 | 0 ,
             };
-            scope.alpha = scope.color.a;
 
             var huePanel = element.find("#hue");
             var hueHandle = element.find("#hue-handle");
@@ -23,15 +24,15 @@ angular.module("fireUI.colorPicker", [] )
             var opacityHandle = element.find("#opacity-handle");
 
             var updateColor = function () {
-                colorPanel.css( "background-color", scope.color.toCSS("rgb") );
-                opacityPanel.css( "background-color", scope.color.toCSS("rgb") );
-                opacityHandle.css( "top", Math.floor((1.0-scope.color.a) * 100).toString() + "%" );
+                var cssRGB = "rgb(" + scope.rgb.r + "," + scope.rgb.g + "," + scope.rgb.b + ")";
+                colorPanel.css( "background-color", cssRGB );
+                opacityPanel.css( "background-color", cssRGB );
+                opacityHandle.css( "top", Math.floor((1.0-scope.alpha) * 100).toString() + "%" );
 
-                var hsb = scope.color.toHSB();
-                hueHandle.css( "top", parseInt((1.0-hsb.h/360)*100,10) + "%" );
+                hueHandle.css( "top", parseInt((1.0-scope.hsv.h/360)*100,10) + "%" );
                 colorHandle.css({
-                    left: parseInt(hsb.s,10) + "%",
-                    top: parseInt((100-hsb.b),10) + "%"
+                    left: parseInt(scope.hsv.s,10) + "%",
+                    top: parseInt((100-scope.hsv.b),10) + "%"
                 });
             };
 
@@ -39,18 +40,16 @@ angular.module("fireUI.colorPicker", [] )
 
             // scope
             scope.$watchGroup ( [
-                'color.r', 
-                'color.g', 
-                'color.b', 
-                'color.a'
+                'hsv.h', 
+                'hsv.s', 
+                'hsv.v', 
             ], function ( val, old ) {
-                scope.rgb = {
-                    r: scope.color.r * 255,
-                    g: scope.color.g * 255,
-                    b: scope.color.b * 255,
-                };
-                scope.alpha = scope.color.a;
-
+                // var _rgb = FIRE.hsv2rgb(val[0], val[1], val[2]);
+                // scope.rgb = {
+                //     r: _rgb.r * 255 | 0 ,
+                //     g: _rgb.g * 255 | 0 ,
+                //     b: _rgb.b * 255 | 0 ,
+                // };
                 updateColor();
             }); 
 
@@ -58,15 +57,14 @@ angular.module("fireUI.colorPicker", [] )
                 'rgb.r', 
                 'rgb.g', 
                 'rgb.b', 
-                'alpha'
             ], function ( val, old ) {
-                scope.color.r = scope.rgb.r/255; 
-                scope.color.g = scope.rgb.g/255; 
-                scope.color.b = scope.rgb.b/255; 
-                scope.color.a = scope.alpha; 
-
+                scope.hsv = FIRE.rgb2hsv( val[0]/255, val[1]/255, val[2]/255 );
                 updateColor();
             }); 
+
+            scope.$watch ( 'alpha', function () {
+                updateColor();
+            });
 
             scope.$on('$destroy', function () {
                 huePanel.off();
@@ -92,19 +90,29 @@ angular.module("fireUI.colorPicker", [] )
                 var offsetY = (event.pageY - mouseDownY)/huePanel.height();
                 offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
 
-                var hsb = scope.color.toHSB();
-                hsb.h = (1.0 - offsetY) * 360.0;
-                scope.color.fromHSB(hsb.h, hsb.s, hsb.b);
-                scope.$apply();
+                scope.$apply( function () {
+                    scope.hsv.h = (1.0 - offsetY) * 360.0;
+                    var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
+                    scope.rgb = {
+                        r: _rgb.r * 255 | 0,
+                        g: _rgb.g * 255 | 0,
+                        b: _rgb.b * 255 | 0,
+                    };
+                });
 
                 $(document).on ( 'mousemove', function ( event ) {
                     var offsetY = (event.pageY - mouseDownY)/huePanel.height();
                     offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
 
-                    var hsb = scope.color.toHSB();
-                    hsb.h = (1.0 - offsetY) * 360.0;
-                    scope.color.fromHSB(hsb.h, hsb.s, hsb.b);
-                    scope.$apply();
+                    scope.$apply( function () {
+                        scope.hsv.h = (1.0 - offsetY) * 360.0;
+                        var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
+                        scope.rgb = {
+                            r: _rgb.r * 255 | 0,
+                            g: _rgb.g * 255 | 0,
+                            b: _rgb.b * 255 | 0,
+                        };
+                    });
 
                     return false;
                 });
