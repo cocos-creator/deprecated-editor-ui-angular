@@ -62,12 +62,14 @@ angular.module("fireUI.unitInput", [] )
                 input.focus();
             };
 
-            scope.onIncrease = function () {
+            scope.onIncrease = function ( event ) {
                 scope.bind = convert( scope.bind + interval );
+                event.stopPropagation();
             };
 
-            scope.onDecrease = function () {
+            scope.onDecrease = function ( event ) {
                 scope.bind = convert( scope.bind - interval );
+                event.stopPropagation();
             };
 
             scope.$watch ( 'bind', function ( val, old ) {
@@ -97,9 +99,13 @@ angular.module("fireUI.unitInput", [] )
                 var val = convert(input.val());
                 scope.bind = val;
                 scope.$apply();
+
+                return false;
             } )
             .on ( 'click', function () {
                 input.select();
+
+                return false;
             } )
             .on ( 'keydown', function () {
                 switch ( event.which ) {

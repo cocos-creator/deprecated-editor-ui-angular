@@ -7,20 +7,38 @@ angular.module("fireUI.color", [] )
             bind: '=fiBind',
         },
         templateUrl: 'color/color.html',
+        controller: function ( $scope, $element, $compile ) {
+            var border = $element.find('#border')[0];
+            border = $(border);
+
+            $scope.showColorPicker = function () {
+                var el = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( $scope );
+                border.append( el );
+                border.removeClass('hide');
+            };
+            $scope.hideColorPicker = function () {
+                border.addClass('hide');
+                border.empty();
+            };
+        },
         link: function (scope, element, attrs ) {
-            var previewRGB = element.find('#preview-rgb');
-            var previewA = element.find('#preview-alpha');
+            var previewRGB = element.find('#preview-rgb')[0];
+            var previewA = element.find('#preview-alpha')[0];
 
             var updateColor = function () {
-                previewRGB.css( 'background-color', scope.bind.toCSS('rgba') );
-                previewA.css( 'width', Math.floor(scope.bind.a * 100)+'%' );
+                $(previewRGB).css( 'background-color', scope.bind.toCSS('rgba') );
+                $(previewA).css( 'width', Math.floor(scope.bind.a * 100)+'%' );
             };
 
             updateColor();
 
             // scope
-            scope.onClick = function () {
-                // console.log("todo");
+            scope.onClick = function ( event ) {
+                if ( event.target === previewRGB || 
+                     event.target === previewA ) {
+                    // console.log("todo");
+                    scope.showColorPicker();
+                }
             };
 
             scope.$watchGroup ( [
@@ -43,6 +61,7 @@ angular.module("fireUI.color", [] )
             })
             .on('focusout', function() {
                 element.removeClass('focused');
+                scope.hideColorPicker();
             })
             ;
         },

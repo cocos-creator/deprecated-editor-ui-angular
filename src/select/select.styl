@@ -52,7 +52,7 @@
     }
 
     .menu {
-        menuDuration = .3s
+        duration = .3s
 
         visibility: visible
         position: absolute
@@ -67,12 +67,12 @@
         box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)
         opacity: 1.0
 
-        transition: opacity menuDuration ease
+        transition: opacity duration ease
 
         &.hide {
             visibility: hidden
             opacity: 0.0
-            transition: visibility 0s ease menuDuration, opacity menuDuration ease
+            transition: visibility 0s ease duration, opacity duration ease
         }
 
         .item {

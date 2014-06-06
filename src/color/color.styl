@@ -20,6 +20,28 @@
         box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1), 0px 0 0 1px #0c70a6, 0px 0 4px 1px rgba(12,112,166,0.8)
     }
 
+    .border {
+        duration = .3s
+
+        position: absolute
+        padding: 10px
+        top: 25px
+        right: 0px
+
+        outline: 1px solid #222
+        color: #bdbdbd
+        background-color: #474747
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)
+
+        transition: opacity duration ease
+
+        &.hide {
+            visibility: hidden
+            opacity: 0.0
+            transition: visibility 0s ease duration, opacity duration ease
+        }
+    }
+
     .preview-rgb-bg {
         position: relative
         display: block

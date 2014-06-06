@@ -6,8 +6,8 @@
     >
     <span class="unit" ng-click="onUnitClick()">{{unit}}</span>
     <div class="unit-buttons">
-        <button class="button" ng-click="onIncrease()" tabindex="-1"><i class="fa fa-caret-up"></i></button>
+        <button class="button" ng-click="onIncrease($event)" tabindex="-1"><i class="fa fa-caret-up"></i></button>
         <span class="sep"></span>
-        <button class="button" ng-click="onDecrease()" tabindex="-1"><i class="fa fa-caret-down"></i></button>
+        <button class="button" ng-click="onDecrease($event)" tabindex="-1"><i class="fa fa-caret-down"></i></button>
     </div>
 </div>

@@ -1,90 +1,92 @@
 .fire-ui-color-picker {
     position: relative
-    padding: 10px
-    display: inline-block
+    min-width: 202px
+    max-width: 202px
 
-    outline: 1px solid #222
     color: #bdbdbd
-    background-color: #474747
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)
 
     span.space {
         height: 5px;
     }
 
-    .hue {
+    .color-group {
+        display-flexbox ()
+        flex-direction: row
+        flex-wrap: nowrap     
         position: relative
-        display: inline-block
-        width: 20px
-        height: 150px
-        border: 1px solid black
-        margin-right: 6px
 
-        cursor: crosshair
+        .hue {
+            position: relative
+            width: 20px
+            height: 150px
+            border: 1px solid black
+            margin-right: 6px
 
-        background-image: url('color-picker.png')
-        background-position: 0px 0px
+            cursor: crosshair
 
-        .handle {
-            position: absolute
-            color: white
+            background-image: url('color-picker.png')
+            background-position: 0px 0px
 
-            i {
+            .handle {
                 position: absolute
-                font-size: 12px
-                top: -6px
-                left: -6px
+                color: white
+
+                i {
+                    position: absolute
+                    font-size: 12px
+                    top: -6px
+                    left: -6px
+                }
             }
         }
-    }
 
-    .color {
-        position: relative
-        display: inline-block
-        width: 150px
-        height: 150px
-        border: 1px solid black
-        margin-right: 6px
+        .color {
+            position: relative
+            width: 150px
+            height: 150px
+            border: 1px solid black
+            margin-right: 6px
 
-        cursor: crosshair
+            cursor: crosshair
 
-        background-image: url('color-picker.png')
-        background-position: -40px 0px
+            background-image: url('color-picker.png')
+            background-position: -40px 0px
 
-        .handle {
-            position: absolute
-            color: black
-
-            i {
+            .handle {
                 position: absolute
-                font-size: 13px
-                top: -6px
-                left: -6px
+                color: black
+
+                i {
+                    position: absolute
+                    font-size: 13px
+                    top: -6px
+                    left: -6px
+                }
             }
         }
-    }
 
-    .opacity {
-        position: relative
-        display: inline-block
-        width: 20px
-        height: 150px
-        border: 1px solid black
+        .opacity {
+            position: relative
+            width: 20px
+            height: 150px
+            border: 1px solid black
 
-        cursor: crosshair
+            cursor: crosshair
 
-        background-image: url('color-picker.png')
-        background-position: -20px 0px
+            background-image: url('color-picker.png')
+            background-position: -20px 0px
 
-        .handle {
-            position: absolute
-            color: white
-
-            i {
+            .handle {
                 position: absolute
-                font-size: 12px
-                top: -6px
-                left: -6px
+                color: white
+                right: 0
+
+                i {
+                    position: absolute
+                    font-size: 12px
+                    top: -6px
+                    right: -6px
+                }
             }
         }
     }
