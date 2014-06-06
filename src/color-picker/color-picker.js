@@ -4,18 +4,17 @@ angular.module("fireUI.colorPicker", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            hsv: '=fiHsv',
-            alpha: '=fiAlpha',
+            color: '=fiColor',
         },
         templateUrl: 'color-picker/color-picker.html',
         link: function ( scope, element, attrs ) {
-            var _rgb = FIRE.hsv2rgb(scope.hsv.h, scope.hsv.s, scope.hsv.v);
-            var rgbUpdated = false;
+            scope.hsv = scope.color.toHSV();
             scope.rgb = {
-                r: _rgb.r * 255 | 0 ,
-                g: _rgb.g * 255 | 0 ,
-                b: _rgb.b * 255 | 0 ,
+                r: scope.color.r * 255 | 0 ,
+                g: scope.color.g * 255 | 0 ,
+                b: scope.color.b * 255 | 0 ,
             };
+            var editingHSV = false;
 
             var huePanel = element.find("#hue");
             var hueHandle = element.find("#hue-handle");
@@ -25,54 +24,20 @@ angular.module("fireUI.colorPicker", [] )
             var opacityHandle = element.find("#opacity-handle");
 
             var updateColor = function () {
-                var cssRGB = "rgb(" + scope.rgb.r + "," + scope.rgb.g + "," + scope.rgb.b + ")";
+                var cssRGB = FIRE.hsv2rgb( scope.hsv.h, 1, 1 );
+                cssRGB = "rgb("+ (cssRGB.r*255|0) + "," + (cssRGB.g*255|0) + "," + (cssRGB.b*255|0) + ")";
                 colorPanel.css( "background-color", cssRGB );
                 opacityPanel.css( "background-color", cssRGB );
-                opacityHandle.css( "top", Math.floor((1.0-scope.alpha) * 100).toString() + "%" );
+                opacityHandle.css( "top", (1.0-scope.color.a)*100 + "%" );
 
-                hueHandle.css( "top", parseInt((1.0-scope.hsv.h/360)*100,10) + "%" );
+                hueHandle.css( "top", (1.0-scope.hsv.h)*100 + "%" );
                 colorHandle.css({
-                    left: parseInt(scope.hsv.s,10) + "%",
-                    top: parseInt((100-scope.hsv.v),10) + "%"
+                    left: scope.hsv.s*100 + "%",
+                    top: (1.0-scope.hsv.v)*100 + "%"
                 });
             };
 
-            updateColor();
-
-            // scope
-            scope.$watchGroup ( [
-                'hsv.h', 
-                'hsv.s', 
-                'hsv.v', 
-            ], function ( val, old ) {
-                var _rgb = FIRE.hsv2rgb(val[0], val[1], val[2]);
-                scope.rgb = {
-                    r: _rgb.r * 255 | 0,
-                    g: _rgb.g * 255 | 0,
-                    b: _rgb.b * 255 | 0,
-                };
-                updateColor();
-            }); 
-
-            scope.$watchGroup ( [
-                'rgb.r', 
-                'rgb.g', 
-                'rgb.b', 
-            ], function ( val, old ) {
-                scope.hsv = FIRE.rgb2hsv( val[0]/255, val[1]/255, val[2]/255 );
-                updateColor();
-            }); 
-
-            scope.$watch ( 'alpha', function () {
-                updateColor();
-            });
-
-            scope.$on('$destroy', function () {
-                huePanel.off();
-            });
-
-            // hue
-            huePanel.on ( 'mousedown', function ( event ) {
+            var addDragGhost = function ( cursor ) {
                 // add drag-ghost
                 var dragGhost = $("<div></div>")
                 .addClass("drag-ghost")
@@ -83,33 +48,153 @@ angular.module("fireUI.colorPicker", [] )
                     top: "0",
                     width: $(window).width() + "px",
                     height: $(window).height() + "px",
-                    cursor: "crosshair",
+                    cursor: cursor,
                 })
                 ;
                 $(document.body).append(dragGhost);
-                var mouseDownY = $(this).offset().top;
-                var offsetY = (event.pageY - mouseDownY)/huePanel.height();
-                offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
+                return dragGhost;
+            };
 
-                scope.$apply( function () {
-                    scope.hsv.h = (1.0 - offsetY) * 360.0;
-                });
+            var removeDragGhost = function ( dragGhost ) {
+                dragGhost.css('cursor', 'auto');
+                dragGhost.remove();
+            };
+
+            updateColor();
+
+            // scope
+            scope.$watchGroup ( [
+                'rgb.r', 
+                'rgb.g', 
+                'rgb.b', 
+            ], function ( val, old ) {
+                scope.color.r = val[0]/255;
+                scope.color.g = val[1]/255;
+                scope.color.b = val[2]/255;
+            }); 
+
+            scope.$watchGroup ( [
+                'color.r', 
+                'color.g', 
+                'color.b', 
+            ], function ( val, old ) {
+                scope.rgb = {
+                    r: scope.color.r * 255 | 0,
+                    g: scope.color.g * 255 | 0,
+                    b: scope.color.b * 255 | 0,
+                };
+                if ( !editingHSV ) {
+                    scope.hsv = FIRE.rgb2hsv( val[0], val[1], val[2] );
+                    updateColor();
+                }
+            }); 
+
+            scope.$watch ( 'color.a', function () {
+                updateColor();
+            });
+
+            scope.$on('$destroy', function () {
+                huePanel.off();
+                colorPanel.off();
+            });
+
+            // hue
+            huePanel.on ( 'mousedown', function ( event ) {
+                // add drag-ghost
+                var dragGhost = addDragGhost("crosshair");
+                editingHSV = true;
+
+                var mouseDownY = $(this).offset().top;
+                var updateMouseMove = function (event) {
+                    var offsetY = (event.pageY - mouseDownY)/huePanel.height();
+                    offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.001 );
+
+                    scope.hsv.h = 1.0-offsetY;
+                    updateColor();
+                    scope.$apply( function () {
+                        var h = Math.round( scope.hsv.h * 100.0 )/100.0;
+                        scope.color.fromHSV( h, scope.hsv.s, scope.hsv.v );
+                    });
+                };
+                updateMouseMove(event);
 
                 $(document).on ( 'mousemove', function ( event ) {
-                    var offsetY = (event.pageY - mouseDownY)/huePanel.height();
-                    offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
-
-                    scope.$apply( function () {
-                        scope.hsv.h = (1.0 - offsetY) * 360.0;
-                    });
-
+                    updateMouseMove(event);
                     return false;
                 });
                 $(document).on ( 'mouseup', function ( event ) {
                     $(document).off ( 'mousemove' );
                     $(document).off ( 'mouseup' );
-                    dragGhost.css('cursor', 'auto');
-                    dragGhost.remove();
+                    removeDragGhost (dragGhost);
+                    editingHSV = false;
+                    return false;
+                });
+            })
+            ;
+
+            // color 
+            colorPanel.on ( 'mousedown', function ( event ) {
+                // add drag-ghost
+                var dragGhost = addDragGhost("crosshair");
+                editingHSV = true;
+
+                var mouseDownX = $(this).offset().left;
+                var mouseDownY = $(this).offset().top;
+
+                var updateMouseMove = function (event) {
+                    var offsetX = (event.pageX - mouseDownX)/colorPanel.width();
+                    var offsetY = (event.pageY - mouseDownY)/colorPanel.height();
+
+                    offsetX = Math.max( Math.min( offsetX, 1.0 ), 0.0 );
+                    offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
+
+                    scope.hsv.s = offsetX;
+                    scope.hsv.v = 1.0-offsetY;
+                    updateColor();
+                    scope.$apply( function () {
+                        var h = Math.round( scope.hsv.h * 100.0 )/100.0;
+                        scope.color.fromHSV( h, scope.hsv.s, scope.hsv.v );
+                    });
+                };
+                updateMouseMove(event);
+
+                $(document).on ( 'mousemove', function ( event ) {
+                    updateMouseMove(event);
+                });
+                $(document).on ( 'mouseup', function ( event ) {
+                    $(document).off ( 'mousemove' );
+                    $(document).off ( 'mouseup' );
+                    removeDragGhost (dragGhost);
+                    editingHSV = false;
+                    return false;
+                });
+            })
+            ;
+
+            // alpha
+            opacityPanel.on ( 'mousedown', function ( event ) {
+                // add drag-ghost
+                var dragGhost = addDragGhost("crosshair");
+
+                var mouseDownY = $(this).offset().top;
+                var updateMouseMove = function (event) {
+                    var offsetY = (event.pageY - mouseDownY)/opacityPanel.height();
+                    offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
+
+                    scope.$apply( function () {
+                        scope.color.a = 1.0-offsetY;
+                    });
+                };
+                updateMouseMove(event);
+
+                $(document).on ( 'mousemove', function ( event ) {
+                    updateMouseMove(event);
+                    return false;
+                });
+                $(document).on ( 'mouseup', function ( event ) {
+                    $(document).off ( 'mousemove' );
+                    $(document).off ( 'mouseup' );
+                    removeDragGhost (dragGhost);
                     return false;
                 });
             })

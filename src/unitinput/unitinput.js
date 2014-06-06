@@ -8,12 +8,32 @@ angular.module("fireUI.unitInput", [] )
             unit: '@fiUnit',
             precision: '@fiPrecision',
             bind: '=fiBind',
+            min: '=fiMin',
+            max: '=fiMax',
+            interval: '=fiInterval',
         },
         templateUrl: 'unitinput/unitinput.html',
         link: function (scope, element, attrs) {
-            scope.type = scope.type ? scope.type : 'int';
-            scope.unit = scope.unit ? scope.unit : '';
-            var precision = scope.precision ? parseInt(scope.precision) : 2;
+            scope.type = (scope.type!==undefined) ? scope.type : 'int';
+            scope.unit = (scope.unit!==undefined) ? scope.unit : '';
+            var precision = (scope.precision!==undefined) ? parseInt(scope.precision) : 2;
+            var min = 0;
+            var max = 0;
+            var interval = 0;
+
+            switch ( scope.type ) {
+                case 'int': 
+                    min = (scope.min!==undefined) ? parseInt(scope.min) : Number.MIN_SAFE_INTEGER;
+                    max = (scope.max!==undefined) ? parseInt(scope.max) : Number.MAX_SAFE_INTEGER;
+                    interval = (scope.interval!==undefined) ? parseInt(scope.interval) : 1;
+                    break;
+
+                case 'float':
+                    min = (scope.min!==undefined) ? parseFloat(scope.min) : -Number.MAX_VALUE;
+                    max = (scope.max!==undefined) ? parseFloat(scope.max) : Number.MAX_VALUE;
+                    interval = (scope.interval!==undefined) ? parseFloat(scope.interval) : 1/Math.pow(10,precision);
+                    break;
+            }
 
             var input = element.children('#input');
             var convert = function ( val ) {
@@ -22,12 +42,14 @@ angular.module("fireUI.unitInput", [] )
                         val = parseInt(val);
                         if ( isNaN(val) ) 
                             val = 0;
+                        val = Math.min( Math.max( val, min ), max );
                         return val;
 
                     case 'float': 
                         val = parseFloat(parseFloat(val).toFixed(precision));
                         if ( isNaN(val) ) 
                             val = 0;
+                        val = Math.min( Math.max( val, min ), max );
                         return val;
                 }
                 console.log("can't find proper type for " + scope.type);
@@ -41,11 +63,11 @@ angular.module("fireUI.unitInput", [] )
             };
 
             scope.onIncrease = function () {
-                scope.bind = convert( scope.bind + 1 );
+                scope.bind = convert( scope.bind + interval );
             };
 
             scope.onDecrease = function () {
-                scope.bind = convert( scope.bind - 1 );
+                scope.bind = convert( scope.bind - interval );
             };
 
             scope.$watch ( 'bind', function ( val, old ) {
@@ -59,7 +81,19 @@ angular.module("fireUI.unitInput", [] )
 
             // input
             input
-            .on ( 'input', function () {
+            .on ( 'input', function (event) {
+                if ( event.target.value === "-" ) {
+                    return;
+                }
+                if ( event.target.value === "." ) {
+                    event.target.value = "0.";
+                    return;
+                }
+                if ( event.target.value === "-." ) {
+                    event.target.value = "-0.";
+                    return;
+                }
+
                 var val = convert(input.val());
                 scope.bind = val;
                 scope.$apply();
