@@ -48,15 +48,17 @@ angular.module("fireUI.select", [] )
                 menu.toggleClass('hide');
                 scope.$apply();
             })
+            .on('focusin', function() {
+                element.addClass('focused');
+
+                return false;
+            })
             .on('focusout', function () {
                 menu.addClass('hide');
                 scope.$apply();
-            })
-            .on('focusin', function() {
-                element.addClass('focused');
-            })
-            .on('focusout', function() {
                 element.removeClass('focused');
+
+                return false;
             })
             .on ( 'keydown', function () {
                 switch ( event.which ) {

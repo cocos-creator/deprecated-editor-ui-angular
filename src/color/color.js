@@ -7,18 +7,25 @@ angular.module("fireUI.color", [] )
             bind: '=fiBind',
         },
         templateUrl: 'color/color.html',
-        controller: function ( $scope, $element, $compile ) {
+        controller: function ( $scope, $element, $compile, $timeout ) {
             var border = $element.find('#border')[0];
             border = $(border);
+            var colorPickerEL = null;
+            var promise = null;
 
             $scope.showColorPicker = function () {
-                var el = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( $scope );
-                border.append( el );
+                colorPickerEL = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( $scope );
+                border.append( colorPickerEL );
                 border.removeClass('hide');
             };
             $scope.hideColorPicker = function () {
                 border.addClass('hide');
-                border.empty();
+
+                promise = $timeout( function () {
+                    colorPickerEL.isolateScope().$destroy();
+                    colorPickerEL.remove();
+                    colorPickerEL = null;
+                }, 300 );
             };
         },
         link: function (scope, element, attrs ) {
@@ -36,7 +43,6 @@ angular.module("fireUI.color", [] )
             scope.onClick = function ( event ) {
                 if ( event.target === previewRGB || 
                      event.target === previewA ) {
-                    // console.log("todo");
                     scope.showColorPicker();
                 }
             };
@@ -58,10 +64,14 @@ angular.module("fireUI.color", [] )
             element
             .on('focusin', function() {
                 element.addClass('focused');
+
+                return false;
             })
             .on('focusout', function() {
                 element.removeClass('focused');
                 scope.hideColorPicker();
+
+                return false;
             })
             ;
         },

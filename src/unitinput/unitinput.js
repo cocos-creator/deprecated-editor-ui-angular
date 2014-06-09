@@ -133,6 +133,8 @@ angular.module("fireUI.unitInput", [] )
             .on('focusin', function() {
                 scope.lastVal = scope.bind;
                 element.addClass('focused');
+
+                return false;
             })
             .on('focusout', function() {
                 var val = convert(input.val());
@@ -141,6 +143,8 @@ angular.module("fireUI.unitInput", [] )
                 input.val(val);
 
                 element.removeClass('focused');
+
+                return false;
             })
             ;
         },
