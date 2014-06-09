@@ -130,21 +130,19 @@ angular.module("fireUI.unitInput", [] )
 
             // element
             element
-            .on('focusin', function() {
+            .on('focusin', function(event) {
                 scope.lastVal = scope.bind;
                 element.addClass('focused');
-
-                return false;
             })
             .on('focusout', function() {
-                var val = convert(input.val());
-                scope.bind = val;
-                scope.$apply();
-                input.val(val);
+                if ( element.find( event.relatedTarget ).length === 0 ) {
+                    var val = convert(input.val());
+                    scope.bind = val;
+                    scope.$apply();
+                    input.val(val);
 
-                element.removeClass('focused');
-
-                return false;
+                    element.removeClass('focused');
+                }
             })
             ;
         },

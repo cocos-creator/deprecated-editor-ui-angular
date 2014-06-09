@@ -21,11 +21,13 @@ angular.module("fireUI.color", [] )
             $scope.hideColorPicker = function () {
                 border.addClass('hide');
 
-                promise = $timeout( function () {
-                    colorPickerEL.isolateScope().$destroy();
-                    colorPickerEL.remove();
-                    colorPickerEL = null;
-                }, 300 );
+                if ( colorPickerEL !== null ) {
+                    promise = $timeout( function () {
+                        colorPickerEL.isolateScope().$destroy();
+                        colorPickerEL.remove();
+                        colorPickerEL = null;
+                    }, 300 );
+                }
             };
         },
         link: function (scope, element, attrs ) {
@@ -64,14 +66,12 @@ angular.module("fireUI.color", [] )
             element
             .on('focusin', function() {
                 element.addClass('focused');
-
-                return false;
             })
             .on('focusout', function() {
-                element.removeClass('focused');
-                scope.hideColorPicker();
-
-                return false;
+                if ( element.find( event.relatedTarget ).length === 0 ) {
+                    element.removeClass('focused');
+                    scope.hideColorPicker();
+                }
             })
             ;
         },
