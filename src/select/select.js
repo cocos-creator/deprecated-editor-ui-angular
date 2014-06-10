@@ -52,6 +52,9 @@ angular.module("fireUI.select", [] )
                 element.addClass('focused');
             })
             .on('focusout', function () {
+                if ( element.hasClass('focused') === false )
+                    return;
+
                 if ( element.find( event.relatedTarget ).length === 0 ) {
                     menu.addClass('hide');
                     scope.$apply();
@@ -63,7 +66,7 @@ angular.module("fireUI.select", [] )
                     // esc
                     case 27:
                         element.blur(); 
-                    break;
+                    return false;
                 }
             } )
             ;

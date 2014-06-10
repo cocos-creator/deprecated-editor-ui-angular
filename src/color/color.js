@@ -14,18 +14,27 @@ angular.module("fireUI.color", [] )
             var promise = null;
 
             $scope.showColorPicker = function () {
-                colorPickerEL = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( $scope );
-                border.append( colorPickerEL );
+                if ( promise !== null ) {
+                    $timeout.cancel(promise);
+                }
+
+                if ( colorPickerEL === null ) {
+                    colorPickerEL = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( $scope );
+                    border.append( colorPickerEL );
+                }
+
                 border.removeClass('hide');
             };
             $scope.hideColorPicker = function () {
                 border.addClass('hide');
 
                 if ( colorPickerEL !== null ) {
+                    // TODO: we need to add border.disable(); which will prevent event during fadeout 
                     promise = $timeout( function () {
                         colorPickerEL.isolateScope().$destroy();
                         colorPickerEL.remove();
                         colorPickerEL = null;
+                        promise = null;
                     }, 300 );
                 }
             };
@@ -33,6 +42,7 @@ angular.module("fireUI.color", [] )
         link: function (scope, element, attrs ) {
             var previewRGB = element.find('#preview-rgb')[0];
             var previewA = element.find('#preview-alpha')[0];
+            var border = element.find('#border')[0];
 
             var updateColor = function () {
                 $(previewRGB).css( 'background-color', scope.bind.toCSS('rgba') );
@@ -45,7 +55,12 @@ angular.module("fireUI.color", [] )
             scope.onClick = function ( event ) {
                 if ( event.target === previewRGB || 
                      event.target === previewA ) {
-                    scope.showColorPicker();
+                    if ( $(border).hasClass('hide') ) {
+                        scope.showColorPicker();
+                    }
+                    else {
+                        scope.hideColorPicker();
+                    }
                 }
             };
 
@@ -68,11 +83,29 @@ angular.module("fireUI.color", [] )
                 element.addClass('focused');
             })
             .on('focusout', function() {
+                if ( element.hasClass('focused') === false )
+                    return;
+
+                if ( event.relatedTarget === null &&
+                     element.find('.fire-ui-unitinput').find(event.target).length > 0 )
+                {
+                    element.focus();
+                    return;
+                }
+
                 if ( element.find( event.relatedTarget ).length === 0 ) {
                     element.removeClass('focused');
                     scope.hideColorPicker();
                 }
             })
+            .on ( 'keydown', function () {
+                switch ( event.which ) {
+                    // esc
+                    case 27:
+                        element.blur(); 
+                    return false;
+                }
+            } )
             ;
         },
     };

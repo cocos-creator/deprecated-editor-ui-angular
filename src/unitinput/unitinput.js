@@ -115,7 +115,7 @@ angular.module("fireUI.unitInput", [] )
                         scope.$apply();
                         input.val(scope.bind);
                         input.blur(); 
-                    break;
+                    return false;
 
                     // esc
                     case 27:
@@ -123,7 +123,7 @@ angular.module("fireUI.unitInput", [] )
                         scope.$apply();
                         input.val(scope.bind);
                         input.blur(); 
-                    break;
+                    return false;
                 }
             } )
             ;
@@ -135,6 +135,10 @@ angular.module("fireUI.unitInput", [] )
                 element.addClass('focused');
             })
             .on('focusout', function() {
+                if ( element.hasClass('focused') === false )
+                    return;
+
+                //
                 if ( element.find( event.relatedTarget ).length === 0 ) {
                     var val = convert(input.val());
                     scope.bind = val;
