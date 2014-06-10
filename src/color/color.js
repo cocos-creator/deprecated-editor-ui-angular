@@ -105,7 +105,7 @@ angular.module("fireUI.color", [] )
                         element.blur(); 
                     return false;
                 }
-            } )
+            })
             ;
         },
     };

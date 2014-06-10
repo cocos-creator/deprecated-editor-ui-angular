@@ -15,8 +15,9 @@ var paths = {
     js_in_order: [ 
         'src/interactions/draggable.js',
         'src/checkbox/checkbox.js', 
-        'src/color/color.js', 
         'src/color-picker/color-picker.js', 
+        'src/color/color.js', 
+        'src/label/label.js',
         'src/select/select.js',
         'src/unitinput/unitinput.js',
 
