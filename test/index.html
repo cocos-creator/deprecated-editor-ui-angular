@@ -77,6 +77,7 @@ body {
     color: white;
 }
 span.space {
+    width: 5px;
     height: 5px;
     display: block;
 }
@@ -110,17 +111,32 @@ span.space {
     <span class="space"></span>                                     
 
 
-    <div style="display: flex; flex-direction: row">
-        <fire-ui-label>My Pixel</fire-ui-label>
+    <div class="flex-row">
+        <fire-ui-label>My Checked</fire-ui-label>
         <span class="space"></span>                                     
-        <fire-ui-unitinput fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
+        <div class="flex-2">
+            <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>    
+        </div>
     </div>
     <span class="space"></span>                                     
-    <div style="display: flex; flex-direction: row">
-        <fire-ui-label>Hello World</fire-ui-label>
+    <div class="flex-row">
+        <fire-ui-label>My Pixel</fire-ui-label>
         <span class="space"></span>                                     
-        <fire-ui-color fi-bind="myColor"></fire-ui-color>
+        <fire-ui-unitinput class="flex-2" fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
     </div>
+    <span class="space"></span>                                     
+    <div class="flex-row">
+        <fire-ui-label>My Select</fire-ui-label>
+        <span class="space"></span>                                     
+        <fire-ui-select class="flex-2" fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>
+    </div>
+    <span class="space"></span>                                     
+    <div class="flex-row">
+        <fire-ui-label>My Color</fire-ui-label>
+        <span class="space"></span>                                     
+        <fire-ui-color class="flex-2" fi-bind="myColor"></fire-ui-color>
+    </div>
+    <span class="space"></span>                                     
 </div>
 </body>
 
