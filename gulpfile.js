@@ -7,20 +7,14 @@ var stylish = require('jshint-stylish');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+// var uglifyjs = require('gulp-uglifyjs');
 var stylus = require('gulp-stylus');
 var vulcanize = require('gulp-vulcanize');
 var templateCache = require('gulp-angular-templatecache');
 
 var paths = {
     js_in_order: [ 
-        'src/interactions/draggable.js',
-        'src/checkbox/checkbox.js', 
-        'src/color-picker/color-picker.js', 
-        'src/color/color.js', 
-        'src/label/label.js',
-        'src/select/select.js',
-        'src/unitinput/unitinput.js',
-
+        'src/*/*.js',
         'src/editor-ui.js',
     ],
     ext_js: [ 
@@ -58,6 +52,10 @@ gulp.task('js', function() {
     .pipe(jshint.reporter(stylish))
     .pipe(concat('editor-ui.js'))
     .pipe(uglify())
+    // .pipe(uglifyjs( 'editor-ui.js', {
+    //     outSourceMap: true,
+    //     basePath: 'http://any.url/',  // use relative path to locate to /src/js
+    // }))
     .pipe(gulp.dest('bin'))
     ;
 });

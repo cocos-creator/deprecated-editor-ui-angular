@@ -1,4 +1,6 @@
-angular.module("fireUI.colorPicker", [] )
+angular.module("fireUI.colorPicker", [
+    "fireUI.unitInput",
+] )
 .directive( 'fireUiColorPicker', function () {
     return {
         restrict: 'E',

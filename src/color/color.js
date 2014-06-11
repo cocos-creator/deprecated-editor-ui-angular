@@ -1,5 +1,7 @@
-angular.module("fireUI.color", [] )
-.directive( 'fireUiColor', function () {
+angular.module("fireUI.color", [
+    'fireUI.colorPicker',
+] )
+.directive( 'fireUiColor', ['$compile', '$timeout',  function ( $compile, $timeout ) {
     return {
         restrict: 'E',
         replace: true,
@@ -7,42 +9,12 @@ angular.module("fireUI.color", [] )
             bind: '=fiBind',
         },
         templateUrl: 'color/color.html',
-        controller: function ( $scope, $element, $compile, $timeout ) {
-            var border = $element.find('#border')[0];
-            border = $(border);
-            var colorPickerEL = null;
-            var promise = null;
-
-            $scope.showColorPicker = function () {
-                if ( promise !== null ) {
-                    $timeout.cancel(promise);
-                }
-
-                if ( colorPickerEL === null ) {
-                    colorPickerEL = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( $scope );
-                    border.append( colorPickerEL );
-                }
-
-                border.removeClass('hide');
-            };
-            $scope.hideColorPicker = function () {
-                border.addClass('hide');
-
-                if ( colorPickerEL !== null ) {
-                    // TODO: we need to add border.disable(); which will prevent event during fadeout 
-                    promise = $timeout( function () {
-                        colorPickerEL.isolateScope().$destroy();
-                        colorPickerEL.remove();
-                        colorPickerEL = null;
-                        promise = null;
-                    }, 300 );
-                }
-            };
-        },
         link: function (scope, element, attrs ) {
             var previewRGB = element.find('#preview-rgb')[0];
             var previewA = element.find('#preview-alpha')[0];
-            var border = element.find('#border')[0];
+            var border = element.find('#border');
+            var colorPickerEL = null;
+            var promise = null;
 
             var updateColor = function () {
                 $(previewRGB).css( 'background-color', scope.bind.toCSS('rgba') );
@@ -55,12 +27,39 @@ angular.module("fireUI.color", [] )
             scope.onClick = function ( event ) {
                 if ( event.target === previewRGB || 
                      event.target === previewA ) {
-                    if ( $(border).hasClass('hide') ) {
+                    if ( border.hasClass('hide') ) {
                         scope.showColorPicker();
                     }
                     else {
                         scope.hideColorPicker();
                     }
+                }
+            };
+
+            scope.showColorPicker = function () {
+                if ( promise !== null ) {
+                    $timeout.cancel(promise);
+                }
+
+                if ( colorPickerEL === null ) {
+                    colorPickerEL = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( scope );
+                    border.append( colorPickerEL );
+                }
+
+                border.removeClass('hide');
+            };
+
+            scope.hideColorPicker = function () {
+                border.addClass('hide');
+
+                if ( colorPickerEL !== null ) {
+                    // TODO: we need to add border.disable(); which will prevent event during fadeout 
+                    promise = $timeout( function () {
+                        colorPickerEL.isolateScope().$destroy();
+                        colorPickerEL.remove();
+                        colorPickerEL = null;
+                        promise = null;
+                    }, 300 );
                 }
             };
 
@@ -109,4 +108,4 @@ angular.module("fireUI.color", [] )
             ;
         },
     };
-});
+}]);

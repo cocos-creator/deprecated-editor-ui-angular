@@ -16,6 +16,7 @@
         "jshint-stylish": "",
         "gulp-concat": "",
         "gulp-uglify": "",
+        "gulp-uglifyjs": "",
         "gulp-rename": "",
         "gulp-stylus": "",
         "gulp-vulcanize": "",

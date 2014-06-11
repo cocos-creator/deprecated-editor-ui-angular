@@ -87,56 +87,43 @@ span.space {
 <body>
 <div ng-controller="init">
 
-    <button ng-click="myCheckedClick()">Change</button> myChecked = {{myChecked}} <br/>
-    <button ng-click="myPixelClick()">Change</button> myPixel = {{myPixel}} <br/>
-    <button ng-click="mySelectClick()">Change</button> mySelect = {{mySelect}} <br/>
-    <button ng-click="myColorClick()">Change</button> myColor = {{myColor.toString()}} <br/>
+    <button ng-click="myCheckedClick()">Change</button> myChecked = {{myChecked}} <br/>                    
+    <button ng-click="myPixelClick()">Change</button> myPixel = {{myPixel}} <br/>                          
+    <button ng-click="mySelectClick()">Change</button> mySelect = {{mySelect}} <br/>                       
+    <button ng-click="myColorClick()">Change</button> myColor = {{myColor.toString()}} <br/>               
 
-    <hr />
-    <span class="space" style="height: 20px"></span>
+    <hr />                                                                                                 
+    <span class="space" style="height: 20px"></span>                                                       
 
-    <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>    
-    <span class="space"></span>                               
+    <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>                                              
+    <span class="space"></span>                                                                            
 
-    <fire-ui-unitinput fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
-    <span class="space"></span>              
+    <fire-ui-unitinput fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>                   
+    <span class="space"></span>                                                                            
 
-    <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>
-    <span class="space"></span>              
+    <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
+    <span class="space"></span>                                                                            
 
-    <fire-ui-color fi-bind="myColor"></fire-ui-color>
-    <span class="space"></span>                      
+    <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
+    <span class="space"></span>                                                                            
 
-    <fire-ui-label>Hello World</fire-ui-label>
-    <span class="space"></span>                                     
+    <fire-ui-label>Hello World</fire-ui-label>                                                             
+    <span class="space"></span>                                                                            
 
+    <hr />                                                                                                 
+    <span class="space" style="height: 20px"></span>                                                       
 
-    <div class="flex-row">
-        <fire-ui-label>My Checked</fire-ui-label>
-        <span class="space"></span>                                     
-        <div class="flex-2">
-            <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>    
-        </div>
-    </div>
-    <span class="space"></span>                                     
-    <div class="flex-row">
-        <fire-ui-label>My Pixel</fire-ui-label>
-        <span class="space"></span>                                     
-        <fire-ui-unitinput class="flex-2" fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unitinput>
-    </div>
-    <span class="space"></span>                                     
-    <div class="flex-row">
-        <fire-ui-label>My Select</fire-ui-label>
-        <span class="space"></span>                                     
-        <fire-ui-select class="flex-2" fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>
-    </div>
-    <span class="space"></span>                                     
-    <div class="flex-row">
-        <fire-ui-label>My Color</fire-ui-label>
-        <span class="space"></span>                                     
-        <fire-ui-color class="flex-2" fi-bind="myColor"></fire-ui-color>
-    </div>
-    <span class="space"></span>                                     
+    <fire-ui-field fi-bind="myChecked"></fire-ui-field>                                                             
+    <span class="space"></span>                                                                            
+
+    <fire-ui-field fi-bind="myPixel"></fire-ui-field>                                                             
+    <span class="space"></span>                                                                            
+
+    <fire-ui-field fi-bind="mySelect" fi-type="enum" fi-enum-name="FIRE.Atlas.SortBy"></fire-ui-field>                                                             
+    <span class="space"></span>                                                                            
+
+    <fire-ui-field fi-bind="myColor"></fire-ui-field>                                                             
+    <span class="space"></span>                                                                            
 </div>
 </body>
 
