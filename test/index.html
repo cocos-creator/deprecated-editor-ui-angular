@@ -8,7 +8,6 @@
 
 <script src="ext/jquery/dist/jquery.min.js"></script>
 <script src="ext/angular/angular.min.js"></script>
-<script src="ext/angular-placeholders/angular-placeholders.js"></script>
 <script src="bin/core.min.js"></script>
 <script src="bin/editor-ui.js"></script>
 <script src="bin/editor-ui-templates.js"></script>
@@ -22,7 +21,7 @@ function rangeRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-angular.module('testApp', ['placeholders', 'fireUI'])
+angular.module('testApp', ['fireUI'])
 .run( [ '$rootScope', function($rootScope) {
     console.log('start testApp');
 }])
