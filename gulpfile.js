@@ -17,7 +17,7 @@ var paths = {
         'src/*/*.js',
         'src/editor-ui.js',
     ],
-    ext_js: [ 
+    ext_core: [ 
         '../core/bin/**/*.js',
     ],
     img: 'src/img/**/*',
@@ -34,9 +34,9 @@ gulp.task('clean', function() {
 });
 
 // copy
-gulp.task('cp-ext', function() {
-    return gulp.src(paths.ext_js)
-    .pipe(gulp.dest('bin'))
+gulp.task('cp-core', function() {
+    return gulp.src(paths.ext_core)
+    .pipe(gulp.dest('ext/fire-core'))
     ;
 });
 gulp.task('cp-img', function() {
@@ -95,7 +95,7 @@ gulp.task('html', function() {
 
 // watch
 gulp.task('watch', function() {
-    gulp.watch(paths.ext_js, ['cp-ext']).on ( 'error', gutil.log );
+    gulp.watch(paths.ext_core, ['cp-core']).on ( 'error', gutil.log );
     gulp.watch(paths.img, ['cp-img']).on ( 'error', gutil.log );
     gulp.watch(paths.js, ['js-dev']).on ( 'error', gutil.log );
     gulp.watch(paths.css, ['css']).on ( 'error', gutil.log );
@@ -103,5 +103,5 @@ gulp.task('watch', function() {
 });
 
 // tasks
-gulp.task('default', ['cp-ext', 'cp-img', 'js', 'css', 'html'] );
+gulp.task('default', ['cp-core', 'cp-img', 'js', 'css', 'html'] );
 gulp.task('all', ['default'] );
