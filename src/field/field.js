@@ -42,7 +42,7 @@ angular.module("fireUI.field", [
                 switch ( typename ) {
                     case "number":
                         if ( scope.type === 'enum' ) {
-                            var enumDef = eval(scope.enumName);
+                            var enumDef = FIRE.getVarFrom(window,scope.enumName);
                             scope.enumList = FIRE.getEnumList(enumDef);
                             el = $compile( "<fire-ui-select class='flex-2' fi-bind='bind' fi-options='enumList'></fire-ui-select>" )( scope );      
                             element.append(el);
