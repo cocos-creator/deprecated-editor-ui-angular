@@ -10,15 +10,17 @@ angular.module("fireUI.color", [
         },
         templateUrl: 'color/color.html',
         link: function (scope, element, attrs ) {
-            var previewRGB = element.find('#preview-rgb')[0];
-            var previewA = element.find('#preview-alpha')[0];
-            var border = element.find('#border');
-            var colorPickerEL = null;
-            var promise = null;
+            var self = element[0];
+            var previewRGB = self.querySelector('#preview-rgb');
+            var previewA = self.querySelector('#preview-alpha');
+            var iconDown = self.querySelector('#icon-down');
+            var border = self.querySelector('#border');
+            var ngColorPicker = null;
+            var ngPromise = null;
 
             var updateColor = function () {
-                $(previewRGB).css( 'background-color', scope.bind.toCSS('rgba') );
-                $(previewA).css( 'width', Math.floor(scope.bind.a * 100)+'%' );
+                previewRGB.style.backgroundColor = scope.bind.toCSS('rgba');
+                previewA.style.width = Math.floor(scope.bind.a * 100)+'%';
             };
 
             updateColor();
@@ -26,8 +28,10 @@ angular.module("fireUI.color", [
             // scope
             scope.onClick = function ( event ) {
                 if ( event.target === previewRGB || 
-                     event.target === previewA ) {
-                    if ( border.hasClass('hide') ) {
+                     event.target === previewA ||
+                     event.target === iconDown ||
+                     event.target === self ) {
+                    if ( border.classList.contains('hide') ) {
                         scope.showColorPicker();
                     }
                     else {
@@ -37,28 +41,28 @@ angular.module("fireUI.color", [
             };
 
             scope.showColorPicker = function () {
-                if ( promise !== null ) {
-                    $timeout.cancel(promise);
+                if ( ngPromise !== null ) {
+                    $timeout.cancel(ngPromise);
                 }
 
-                if ( colorPickerEL === null ) {
-                    colorPickerEL = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( scope );
-                    border.append( colorPickerEL );
+                if ( ngColorPicker === null ) {
+                    ngColorPicker = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( scope );
+                    border.appendChild( ngColorPicker[0] );
                 }
 
-                border.removeClass('hide');
+                border.classList.remove('hide');
             };
 
             scope.hideColorPicker = function () {
-                border.addClass('hide');
+                border.classList.add('hide');
 
-                if ( colorPickerEL !== null ) {
+                if ( ngColorPicker !== null ) {
                     // TODO: we need to add border.disable(); which will prevent event during fadeout 
-                    promise = $timeout( function () {
-                        colorPickerEL.isolateScope().$destroy();
-                        colorPickerEL.remove();
-                        colorPickerEL = null;
-                        promise = null;
+                    ngPromise = $timeout( function () {
+                        ngColorPicker.isolateScope().$destroy();
+                        ngColorPicker.remove();
+                        ngColorPicker = null;
+                        ngPromise = null;
                     }, 300 );
                 }
             };
@@ -73,39 +77,43 @@ angular.module("fireUI.color", [
             }); 
 
             scope.$on('$destroy', function () {
-                element.off();
+                self.onfocusin = null;
+                self.onfocusout = null;
+                self.onkeydown = null;
             });
 
             // element
-            element
-            .on('focusin', function() {
-                element.addClass('focused');
-            })
-            .on('focusout', function() {
-                if ( element.hasClass('focused') === false )
+            self.onfocusin = function() {
+                self.classList.add('focused');
+            };
+
+            self.onfocusout = function() {
+                if ( self.classList.contains('focused') === false )
                     return;
 
                 if ( event.relatedTarget === null &&
-                     element.find('.fire-ui-unitinput').find(event.target).length > 0 )
+                     FIRE.find ( self.querySelectorAll('.fire-ui-unitinput'), event.target ) )
                 {
-                    element.focus();
+                    self.focus();
                     return;
                 }
 
-                if ( element.find( event.relatedTarget ).length === 0 ) {
-                    element.removeClass('focused');
+                if ( FIRE.find( self, event.relatedTarget ) === false ) {
+                    self.classList.remove('focused');
                     scope.hideColorPicker();
                 }
-            })
-            .on ( 'keydown', function () {
+            };
+
+            self.onkeydown = function () {
                 switch ( event.which ) {
                     // esc
                     case 27:
-                        element.blur(); 
+                        self.blur(); 
+                        self.classList.remove('focused');
+                        scope.hideColorPicker();
                     return false;
                 }
-            })
-            ;
+            };
         },
     };
 }]);

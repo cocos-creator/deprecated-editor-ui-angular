@@ -15,7 +15,8 @@ angular.module("fireUI.field", [
             bind: '=fiBind',
             name: '@fiName',
             type: '@fiType',
-            enumName: '@fiEnumName',
+            enumType: '@fiEnumType',
+            enumList: '=fiEnumList',
         },
         templateUrl: 'field/field.html',
         compile: function(element, attrs) {
@@ -32,7 +33,7 @@ angular.module("fireUI.field", [
             }
             attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : camelCaseToHuman(attrs.fiBind);
             attrs.fiType = (attrs.fiType!==undefined) ? attrs.fiType : 'int';
-            attrs.fiEnumName = (attrs.fiEnumName!==undefined) ? attrs.fiEnumName : '';
+            attrs.fiEnumType = (attrs.fiEnumType!==undefined) ? attrs.fiEnumType : '';
 
             return function postLink (scope, element, attrs) {
                 // do dom transform
@@ -42,9 +43,14 @@ angular.module("fireUI.field", [
                 switch ( typename ) {
                     case "number":
                         if ( scope.type === 'enum' ) {
-                            var enumDef = FIRE.getVarFrom(window,scope.enumName);
-                            scope.enumList = FIRE.getEnumList(enumDef);
-                            el = $compile( "<fire-ui-select class='flex-2' fi-bind='bind' fi-options='enumList'></fire-ui-select>" )( scope );      
+                            if ( scope.enumType !== undefined && scope.enumType !== '' ) {
+                                var enumTypeDef = FIRE.getVarFrom(window,scope.enumType);
+                                scope.finalEnumList = FIRE.getEnumList(enumTypeDef);
+                            }
+                            else {
+                                scope.finalEnumList = scope.enumList.slice(0);
+                            }
+                            el = $compile( "<fire-ui-select class='flex-2' fi-bind='bind' fi-options='finalEnumList'></fire-ui-select>" )( scope );      
                             element.append(el);
                         }
                         else if ( scope.type === 'int' ) {
