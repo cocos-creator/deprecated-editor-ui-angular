@@ -11,10 +11,11 @@ angular.module("fireUI.color", [
         templateUrl: 'color/color.html',
         link: function (scope, element, attrs ) {
             var self = element[0];
-            var previewRGB = self.querySelector('#preview-rgb');
-            var previewA = self.querySelector('#preview-alpha');
-            var iconDown = self.querySelector('#icon-down');
-            var border = self.querySelector('#border');
+            var previewRGB = element.find('#preview-rgb')[0];
+            var previewA = element.find('#preview-alpha')[0];
+            var iconDown = element.find('#icon-down')[0];
+            var border = element.find('#border')[0];
+
             var ngColorPicker = null;
             var ngPromise = null;
 
@@ -31,7 +32,7 @@ angular.module("fireUI.color", [
                      event.target === previewA ||
                      event.target === iconDown ||
                      event.target === self ) {
-                    if ( border.classList.contains('hide') ) {
+                    if ( $(border).hasClass('hide') ) {
                         scope.showColorPicker();
                     }
                     else {
@@ -77,43 +78,39 @@ angular.module("fireUI.color", [
             }); 
 
             scope.$on('$destroy', function () {
-                self.onfocusin = null;
-                self.onfocusout = null;
-                self.onkeydown = null;
+                element.off();
             });
 
             // element
-            self.onfocusin = function() {
-                self.classList.add('focused');
-            };
-
-            self.onfocusout = function() {
-                if ( self.classList.contains('focused') === false )
+            element
+            .on ( 'focusin', function ( event ) {
+                element.addClass('focused');
+            })
+            .on ( 'focusout', function ( event ) {
+                if ( element.hasClass('focused') === false )
                     return;
 
                 if ( event.relatedTarget === null &&
-                     FIRE.find ( self.querySelectorAll('.fire-ui-unitinput'), event.target ) )
+                    element.find('.fire-ui-unitinput').find(event.target).length > 0 )
                 {
-                    self.focus();
+                    element.focus();
                     return;
                 }
 
-                if ( FIRE.find( self, event.relatedTarget ) === false ) {
-                    self.classList.remove('focused');
+                if ( element.find( event.relatedTarget ).length === 0 ) {
+                    element.removeClass('focused');
                     scope.hideColorPicker();
                 }
-            };
-
-            self.onkeydown = function () {
+            })
+            .on ( 'keydown', function (event) {
                 switch ( event.which ) {
                     // esc
                     case 27:
-                        self.blur(); 
-                        self.classList.remove('focused');
-                        scope.hideColorPicker();
+                        element.blur(); 
                     return false;
                 }
-            };
+            })
+            ;
         },
     };
 }]);

@@ -117,12 +117,12 @@ angular.module("fireUI.unitInput", [] )
 
                     return false;
                 } )
-                .on ( 'click', function () {
+                .on ( 'click', function (event) {
                     input.select();
 
                     return false;
                 } )
-                .on ( 'keydown', function () {
+                .on ( 'keydown', function (event) {
                     switch ( event.which ) {
                         // enter
                         case 13:
@@ -149,7 +149,7 @@ angular.module("fireUI.unitInput", [] )
                     scope.lastVal = scope.bind;
                     element.addClass('focused');
                 })
-                .on('focusout', function() {
+                .on('focusout', function(event) {
                     if ( element.hasClass('focused') === false )
                         return;
 
