@@ -38,8 +38,8 @@ angular.module("fireUI.unitInput", [] )
             return function postLink (scope, element, attrs) {
                 switch ( scope.type ) {
                     case 'int': 
-                        min = (scope.min==='infinity') ? Number.MIN_SAFE_INTEGER : parseInt(scope.min);
-                        max = (scope.max==='infinity') ? Number.MAX_SAFE_INTEGER : parseInt(scope.max);
+                        min = (scope.min==='infinity') ? Number.NEGATIVE_INFINITY : parseInt(scope.min);
+                        max = (scope.max==='infinity') ? Number.POSITIVE_INFINITY : parseInt(scope.max);
                         interval = parseInt(scope.interval);
                         break;
 
