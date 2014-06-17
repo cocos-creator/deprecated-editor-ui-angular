@@ -5,7 +5,5 @@ angular.module("fireUI.label", [] )
         replace: true,
         transclude: true,
         templateUrl: 'label/label.html',
-        link: function (scope, element, attrs ) {
-        },
     };
 });
