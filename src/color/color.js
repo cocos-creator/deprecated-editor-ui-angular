@@ -41,6 +41,10 @@ angular.module("fireUI.color", [
             };
 
             scope.showColorPicker = function () {
+                if ( border.classList.contains('hide') === false ) {
+                    return;
+                }
+
                 if ( ngPromise !== null ) {
                     $timeout.cancel(ngPromise);
                 }
@@ -54,6 +58,10 @@ angular.module("fireUI.color", [
             };
 
             scope.hideColorPicker = function () {
+                if ( border.classList.contains('hide') ) {
+                    return;
+                }
+
                 border.classList.add('hide');
 
                 if ( ngColorPicker !== null ) {
