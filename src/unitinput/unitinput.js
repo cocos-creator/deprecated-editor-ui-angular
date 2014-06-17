@@ -142,6 +142,7 @@ angular.module("fireUI.unitInput", [] )
         attrs.fiPrecision = (attrs.fiPrecision!==undefined) ? attrs.fiPrecision : '2';
         attrs.fiMin = (attrs.fiMin!==undefined) ? attrs.fiMin : 'infinity';
         attrs.fiMax = (attrs.fiMax!==undefined) ? attrs.fiMax : 'infinity';
+        var precision = parseInt(attrs.fiPrecision);
 
         switch ( attrs.fiType ) {
             case 'int': 
