@@ -42,7 +42,8 @@ angular.module("fireUI.color", [
             };
 
             scope.showColorPicker = function () {
-                if ( border.classList.contains('hide') === false ) {
+                var jqBorder = $(border);
+                if ( jqBorder.hasClass('hide') === false ) {
                     return;
                 }
 
@@ -52,18 +53,19 @@ angular.module("fireUI.color", [
 
                 if ( ngColorPicker === null ) {
                     ngColorPicker = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( scope );
-                    border.appendChild( ngColorPicker[0] );
+                    jqBorder.append( ngColorPicker[0] );
                 }
 
-                border.classList.remove('hide');
+                jqBorder.removeClass('hide');
             };
 
             scope.hideColorPicker = function () {
-                if ( border.classList.contains('hide') ) {
+                var jqBorder = $(border);
+                if ( jqBorder.hasClass('hide') ) {
                     return;
                 }
 
-                border.classList.add('hide');
+                jqBorder.addClass('hide');
 
                 if ( ngColorPicker !== null ) {
                     // TODO: we need to add border.disable(); which will prevent event during fadeout 
