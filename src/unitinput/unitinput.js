@@ -38,8 +38,8 @@ angular.module("fireUI.unitInput", [] )
             return function postLink (scope, element, attrs) {
                 switch ( scope.type ) {
                     case 'int': 
-                        min = (scope.min==='infinity') ? Number.MIN_SAFE_INTEGER : parseInt(scope.min);
-                        max = (scope.max==='infinity') ? Number.MAX_SAFE_INTEGER : parseInt(scope.max);
+                        min = (scope.min==='infinity') ? Number.NEGATIVE_INFINITY : parseInt(scope.min);
+                        max = (scope.max==='infinity') ? Number.POSITIVE_INFINITY : parseInt(scope.max);
                         interval = parseInt(scope.interval);
                         break;
 
@@ -117,12 +117,12 @@ angular.module("fireUI.unitInput", [] )
 
                     return false;
                 } )
-                .on ( 'click', function () {
+                .on ( 'click', function (event) {
                     input.select();
 
                     return false;
                 } )
-                .on ( 'keydown', function () {
+                .on ( 'keydown', function (event) {
                     switch ( event.which ) {
                         // enter
                         case 13:
@@ -149,7 +149,7 @@ angular.module("fireUI.unitInput", [] )
                     scope.lastVal = scope.bind;
                     element.addClass('focused');
                 })
-                .on('focusout', function() {
+                .on('focusout', function(event) {
                     if ( element.hasClass('focused') === false )
                         return;
 
