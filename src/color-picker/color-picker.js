@@ -32,29 +32,6 @@ angular.module("fireUI.colorPicker", [
             });
         };
 
-        var addDragGhost = function ( cursor ) {
-            // add drag-ghost
-            var dragGhost = $("<div></div>")
-            .addClass("drag-ghost")
-            .css({
-                position: "fixed",
-                "z-index": "999",
-                left: "0",
-                top: "0",
-                width: $(window).width() + "px",
-                height: $(window).height() + "px",
-                cursor: cursor,
-            })
-            ;
-            $(document.body).append(dragGhost);
-            return dragGhost;
-        };
-
-        var removeDragGhost = function ( dragGhost ) {
-            dragGhost.css('cursor', 'auto');
-            dragGhost.remove();
-        };
-
         updateColor();
 
         // scope
@@ -96,7 +73,7 @@ angular.module("fireUI.colorPicker", [
         // hue
         huePanel.on ( 'mousedown', function ( event ) {
             // add drag-ghost
-            var dragGhost = addDragGhost("crosshair");
+            FIRE.addDragGhost("crosshair");
             editingHSV = true;
 
             var mouseDownY = $(this).offset().top;
@@ -120,7 +97,7 @@ angular.module("fireUI.colorPicker", [
             $(document).on ( 'mouseup', function ( event ) {
                 $(document).off ( 'mousemove' );
                 $(document).off ( 'mouseup' );
-                removeDragGhost (dragGhost);
+                FIRE.removeDragGhost();
                 editingHSV = false;
                 return false;
             });
@@ -130,7 +107,7 @@ angular.module("fireUI.colorPicker", [
         // color 
         colorPanel.on ( 'mousedown', function ( event ) {
             // add drag-ghost
-            var dragGhost = addDragGhost("crosshair");
+            FIRE.addDragGhost("crosshair");
             editingHSV = true;
 
             var mouseDownX = $(this).offset().left;
@@ -159,7 +136,7 @@ angular.module("fireUI.colorPicker", [
             $(document).on ( 'mouseup', function ( event ) {
                 $(document).off ( 'mousemove' );
                 $(document).off ( 'mouseup' );
-                removeDragGhost (dragGhost);
+                FIRE.removeDragGhost ();
                 editingHSV = false;
                 return false;
             });
@@ -169,7 +146,7 @@ angular.module("fireUI.colorPicker", [
         // alpha
         opacityPanel.on ( 'mousedown', function ( event ) {
             // add drag-ghost
-            var dragGhost = addDragGhost("crosshair");
+            FIRE.addDragGhost("crosshair");
 
             var mouseDownY = $(this).offset().top;
             var updateMouseMove = function (event) {
@@ -189,7 +166,7 @@ angular.module("fireUI.colorPicker", [
             $(document).on ( 'mouseup', function ( event ) {
                 $(document).off ( 'mousemove' );
                 $(document).off ( 'mouseup' );
-                removeDragGhost (dragGhost);
+                FIRE.removeDragGhost ();
                 return false;
             });
         })
