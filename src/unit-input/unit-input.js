@@ -1,5 +1,12 @@
 angular.module("fireUI.unitInput", [] )
-.directive( 'fireUiUnitinput', function () {
+.directive( 'fireUiUnitInput', function () {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        var input = element.children('#input');
+        input[0].tabIndex = FIRE.getParentTabIndex(input[0])+1;
+
+    }
+
     function postLink (scope, element, attrs) {
         var precision = parseInt(attrs.fiPrecision);
         var min = 0;
@@ -154,7 +161,10 @@ angular.module("fireUI.unitInput", [] )
                 break;
         }
 
-        return postLink;
+        return {
+            pre: preLink,
+            post: postLink,
+        };
     }
 
     return {
@@ -169,7 +179,7 @@ angular.module("fireUI.unitInput", [] )
             interval: '@fiInterval',
             bind: '=fiBind',
         },
-        templateUrl: 'unitinput/unitinput.html',
+        templateUrl: 'unit-input/unit-input.html',
         compile: compile,
     };
 });

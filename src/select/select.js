@@ -1,6 +1,11 @@
 angular.module("fireUI.select", [] )
 .directive( 'fireUiSelect', function () {
-    function link (scope, element, attrs) {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+    }
+
+    function postLink (scope, element, attrs) {
         var menu = element.children('.menu');
 
         var updateValueName = function () {
@@ -64,6 +69,13 @@ angular.module("fireUI.select", [] )
         ;
     }
 
+    function compile ( element, attrs ) {
+        return {
+            pre: preLink,
+            post: postLink,
+        };
+    }
+
     return {
         restrict: 'E',
         replace: true,
@@ -72,6 +84,6 @@ angular.module("fireUI.select", [] )
             options: '=fiOptions',
         },
         templateUrl: 'select/select.html',
-        link: link,
+        compile: compile,
     };
 });

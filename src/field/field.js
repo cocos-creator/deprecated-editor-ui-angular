@@ -7,11 +7,22 @@ angular.module("fireUI.field", [
     "fireUI.unitInput",
 ] )
 .directive( 'fireUiField', ['$compile', function ( $compile ) {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+    }
+
     function postLink (scope, element, attrs) {
         // do dom transform
         var typename = typeof scope.bind;
-        var el = null;
 
+        // NOTE: if we write the fire-ui-label html codes directly in field.html, we can not
+        // get compiled labelEL here through element.find('#label').
+        var labelEL = $compile( "<fire-ui-label id='label'>{{name}}</fire-ui-label>" )( scope );
+        element.append(labelEL);
+        element.append("<span class='space'></span>");
+
+        var el = null;
         switch ( typename ) {
             case "number":
                 if ( scope.type === 'enum' ) {
@@ -26,17 +37,17 @@ angular.module("fireUI.field", [
                     element.append(el);
                 }
                 else if ( scope.type === 'int' ) {
-                    el = $compile( "<fire-ui-unitinput class='flex-2' fi-type='int' fi-bind='bind'></fire-ui-unitinput>" )( scope );
+                    el = $compile( "<fire-ui-unit-input class='flex-2' fi-type='int' fi-bind='bind'></fire-ui-unit-input>" )( scope );
                     element.append(el);
                 }
                 else if ( scope.type === 'float' ) {
-                    el = $compile( "<fire-ui-unitinput class='flex-2' fi-type='float' fi-bind='bind'></fire-ui-unitinput>" )( scope );
+                    el = $compile( "<fire-ui-unit-input class='flex-2' fi-type='float' fi-bind='bind'></fire-ui-unit-input>" )( scope );
                     element.append(el);
                 }
                 break;
 
             case "boolean":
-                el = $compile( "<div class='flex-2'><fire-ui-checkbox fi-bind='bind'></fire-ui-unitinput></div>" )( scope );
+                el = $compile( "<div class='flex-2'><fire-ui-checkbox fi-bind='bind'></fire-ui-checkbox></div>" )( scope );
                 element.append(el);
                 break;
 
@@ -59,25 +70,37 @@ angular.module("fireUI.field", [
                 }
                 break;
         }
+
+        // element
+        element
+        .on('focusin', function(event) {
+            element.addClass('focused');
+            labelEL.addClass('focused');
+            el.addClass('focused');
+        })
+        .on('focusout', function(event) {
+            if ( element.hasClass('focused') === false )
+                return;
+
+            //
+            if ( element.find( event.relatedTarget ).length === 0 ) {
+                element.removeClass('focused');
+                labelEL.removeClass('focused');
+                el.removeClass('focused');
+            }
+        })
+        ;
     }
 
     function compile ( element, attrs ) {
-        function camelCaseToHuman ( text ) {
-            var result = text.replace(/([A-Z])/g, ' $1');
-
-            // remove first white-space
-            if ( result.charAt(0) == ' ' ) {
-                result.slice(1);
-            }
-
-            // capitalize the first letter
-            return result.charAt(0).toUpperCase() + result.slice(1);
-        }
-        attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : camelCaseToHuman(attrs.fiBind);
+        attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : FIRE.camelCaseToHuman(attrs.fiBind);
         attrs.fiType = (attrs.fiType!==undefined) ? attrs.fiType : 'int';
         attrs.fiEnumType = (attrs.fiEnumType!==undefined) ? attrs.fiEnumType : '';
 
-        return postLink;
+        return {
+            pre: preLink,
+            post: postLink,
+        };
     }
 
     return {

@@ -1,23 +1,42 @@
 angular.module("fireUI.customField", [] )
 .directive( 'fireUiCustomField', ['$compile', function ( $compile ) {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+    }
+
     function postLink (scope, element, attrs) {
+        element.prepend("<span class='space'></span>");
+
+        // NOTE: if we write the fire-ui-label html codes directly in field.html, we can not
+        // get compiled labelEL here through element.find('#label').
+        var labelEL = $compile( "<fire-ui-label id='label'>{{name}}</fire-ui-label>" )( scope );
+        element.prepend(labelEL);
+
+        // element
+        element
+        .on('focusin', function(event) {
+            element.addClass('focused');
+            labelEL.addClass('focused');
+        })
+        .on('focusout', function(event) {
+            if ( element.hasClass('focused') === false )
+                return;
+            //
+            if ( element.find( event.relatedTarget ).length === 0 ) {
+                element.removeClass('focused');
+                labelEL.removeClass('focused');
+            }
+        })
+        ;
     }
 
     function compile ( element, attrs ) {
-        function camelCaseToHuman ( text ) {
-            var result = text.replace(/([A-Z])/g, ' $1');
-
-            // remove first white-space
-            if ( result.charAt(0) == ' ' ) {
-                result.slice(1);
-            }
-
-            // capitalize the first letter
-            return result.charAt(0).toUpperCase() + result.slice(1);
-        }
-        attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : camelCaseToHuman(attrs.fiBind);
-
-        return postLink;
+        attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : FIRE.camelCaseToHuman(attrs.fiBind);
+        return {
+            pre: preLink,
+            post: postLink,
+        };
     }
 
     return {

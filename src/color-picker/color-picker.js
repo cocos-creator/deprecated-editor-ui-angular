@@ -2,7 +2,12 @@ angular.module("fireUI.colorPicker", [
     "fireUI.unitInput",
 ] )
 .directive( 'fireUiColorPicker', function () {
-    function link ( scope, element, attrs ) {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+    }
+
+    function postLink ( scope, element, attrs ) {
         scope.hsv = scope.color.toHSV();
         scope.rgb = {
             r: scope.color.r * 255 | 0 ,
@@ -173,6 +178,13 @@ angular.module("fireUI.colorPicker", [
         ;
     }
 
+    function compile ( element, attrs ) {
+        return {
+            pre: preLink,
+            post: postLink,
+        };
+    }
+
     return {
         restrict: 'E',
         replace: true,
@@ -180,6 +192,6 @@ angular.module("fireUI.colorPicker", [
             color: '=fiColor',
         },
         templateUrl: 'color-picker/color-picker.html',
-        link: link,
+        compile: compile,
     };
 });

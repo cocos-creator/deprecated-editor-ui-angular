@@ -2,7 +2,12 @@ angular.module("fireUI.color", [
     'fireUI.colorPicker',
 ] )
 .directive( 'fireUiColor', ['$compile', '$timeout',  function ( $compile, $timeout ) {
-    function link ( scope, element, attrs ) {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+    }
+
+    function postLink ( scope, element, attrs ) {
         var self = element[0];
         var previewRGB = element.find('#preview-rgb')[0];
         var previewA = element.find('#preview-alpha')[0];
@@ -13,7 +18,7 @@ angular.module("fireUI.color", [
         var ngPromise = null;
 
         var updateColor = function () {
-            previewRGB.style.backgroundColor = scope.bind.toCSS('rgba');
+            previewRGB.style.backgroundColor = scope.bind.toCSS('rgb');
             previewA.style.width = Math.floor(scope.bind.a * 100)+'%';
         };
 
@@ -94,10 +99,10 @@ angular.module("fireUI.color", [
                 return;
 
             if ( event.relatedTarget === null &&
-                element.find('.fire-ui-unitinput').find(event.target).length > 0 )
+                 element.find('.fire-ui-unit-input').find(event.target).length > 0 )
             {
                 element.focus();
-                return;
+                return false;
             }
 
             if ( element.find( event.relatedTarget ).length === 0 ) {
@@ -116,6 +121,13 @@ angular.module("fireUI.color", [
         ;
     }
 
+    function compile ( element, attrs ) {
+        return {
+            pre: preLink,
+            post: postLink,
+        };
+    }
+
     return {
         restrict: 'E',
         replace: true,
@@ -123,6 +135,6 @@ angular.module("fireUI.color", [
             bind: '=fiBind',
         },
         templateUrl: 'color/color.html',
-        link: link,
+        compile: compile,
     };
 }]);
