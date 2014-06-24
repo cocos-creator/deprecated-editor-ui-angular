@@ -13,5 +13,6 @@ angular.module("fireUI", [
     "fireUI.section",
     "fireUI.select",
     "fireUI.unitInput",
+    "fireUI.vec2",
 ])
 ;

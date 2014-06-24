@@ -63,6 +63,13 @@ angular.module('testApp', ['fireUI'])
         $scope.myColor.b = rangeRandom( 0.0, 1.0 );
         $scope.myColor.a = rangeRandom( 0.0, 1.0 );
     };
+
+    // myVec2
+    $scope.myVec2 = new FIRE.Vec2( 1.0, 1.0 );
+    $scope.myVec2Click = function () {
+        $scope.myVec2.x = rangeRandom( 0.0, 1.0 );
+        $scope.myVec2.y = rangeRandom( 0.0, 1.0 );
+    };
 }])
 ;
 </script>
@@ -90,6 +97,7 @@ span.space {
     <button ng-click="myPixelClick()">Change</button> myPixel = {{myPixel}} <br/>                          
     <button ng-click="mySelectClick()">Change</button> mySelect = {{mySelect}} <br/>                       
     <button ng-click="myColorClick()">Change</button> myColor = {{myColor.toString()}} <br/>               
+    <button ng-click="myVec2Click()">Change</button> myVec2 = {{myVec2.toString()}} <br/>               
 
     <hr />                                                                                                 
     <span class="space" style="height: 20px"></span>                                                       
@@ -107,6 +115,9 @@ span.space {
         <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
         <span class="space"></span>                                                                            
 
+        <fire-ui-vec2 fi-bind="myVec2"></fire-ui-vec2>                                                      
+        <span class="space"></span>                                                                            
+
         <fire-ui-label>Hello World</fire-ui-label>                                                             
         <span class="space"></span>                                                                            
 
@@ -117,10 +128,13 @@ span.space {
 
     <hr />                                                                                                 
 
-    <fire-ui-field fi-bind="myChecked"></fire-ui-field>                                                             
-    <fire-ui-field fi-bind="myPixel"></fire-ui-field>                                                             
-    <fire-ui-field fi-bind="mySelect" fi-type="enum" fi-enum-type="FIRE.Atlas.SortBy"></fire-ui-field>                                                             
-    <fire-ui-field fi-bind="myColor"></fire-ui-field>                                                             
+    <fire-ui-section fi-title="My Section 2">
+        <fire-ui-field fi-bind="myChecked"></fire-ui-field>                                                             
+        <fire-ui-field fi-bind="myPixel"></fire-ui-field>                                                             
+        <fire-ui-field fi-bind="mySelect" fi-type="enum" fi-enum-type="FIRE.Atlas.SortBy"></fire-ui-field>                                                             
+        <fire-ui-field fi-bind="myColor"></fire-ui-field>                                                             
+        <fire-ui-field fi-bind="myVec2"></fire-ui-field>                                                             
+    </fire-ui-section>
 </div>
 </body>
 

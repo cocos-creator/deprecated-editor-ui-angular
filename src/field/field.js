@@ -66,6 +66,11 @@ angular.module("fireUI.field", [
                             el = $compile( "<fire-ui-color class='flex-2' fi-bind='bind'></fire-ui-color>" )( scope );
                             element.append(el);
                             break;
+
+                        case "FIRE.Vec2":
+                            el = $compile( "<fire-ui-vec2 class='flex-2' fi-bind='bind'></fire-ui-vec2>" )( scope );
+                            element.append(el);
+                            break;
                     }
                 }
                 break;
