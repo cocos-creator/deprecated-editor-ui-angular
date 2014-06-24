@@ -95,8 +95,6 @@ angular.module("fireUI.unitInput", [] )
             return false;
         } )
         .on ( 'click', function (event) {
-            input.select();
-
             return false;
         } )
         .on ( 'keydown', function (event) {

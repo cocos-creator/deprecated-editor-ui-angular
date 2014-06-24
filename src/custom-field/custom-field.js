@@ -1,8 +1,8 @@
 angular.module("fireUI.customField", [] )
 .directive( 'fireUiCustomField', ['$compile', function ( $compile ) {
     function preLink ( scope, element, attrs ) {
-        // init tabindex
-        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+        // // init tabindex
+        // element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
     }
 
     function postLink (scope, element, attrs) {
@@ -27,6 +27,18 @@ angular.module("fireUI.customField", [] )
                 element.removeClass('focused');
                 labelEL.removeClass('focused');
             }
+        })
+        .on('mousedown', function(event) {
+            if ( labelEL.is(event.target) === false && 
+                 labelEL.find(event.target).length === 0 )
+                return;
+
+            var focusableEL = FIRE.getFirstFocusableChild(element[0]);
+            if ( focusableEL ) {
+                focusableEL.focus();
+            }
+
+            event.preventDefault();
         })
         ;
     }

@@ -3,6 +3,7 @@ angular.module("fireUI", [
     "fireUI.draggable",
 
     // widgets
+    "fireUI.button",
     "fireUI.checkbox",
     "fireUI.color",
     "fireUI.colorPicker",
