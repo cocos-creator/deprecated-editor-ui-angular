@@ -94,24 +94,26 @@ span.space {
     <hr />                                                                                                 
     <span class="space" style="height: 20px"></span>                                                       
 
-    <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>                                              
-    <span class="space"></span>                                                                            
+    <fire-ui-section fi-title="My Section">
+        <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>                                              
+        <span class="space"></span>                                                                            
 
-    <fire-ui-unit-input fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unit-input>                   
-    <span class="space"></span>                                                                            
+        <fire-ui-unit-input fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unit-input>                   
+        <span class="space"></span>                                                                            
 
-    <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
-    <span class="space"></span>                                                                            
+        <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
+        <span class="space"></span>                                                                            
 
-    <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
-    <span class="space"></span>                                                                            
+        <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
+        <span class="space"></span>                                                                            
 
-    <fire-ui-label>Hello World</fire-ui-label>                                                             
-    <span class="space"></span>                                                                            
+        <fire-ui-label>Hello World</fire-ui-label>                                                             
+        <span class="space"></span>                                                                            
 
-    <fire-ui-button ng-click="myColorClick()">OK</fire-ui-button> 
-    <fire-ui-button>Cancel</fire-ui-button>                                                             
-    <span class="space"></span>                                                                            
+        <fire-ui-button ng-click="myColorClick()">OK</fire-ui-button> 
+        <fire-ui-button>Cancel</fire-ui-button>                                                             
+        <span class="space"></span>                                                                            
+    </fire-ui-section>
 
     <hr />                                                                                                 
 

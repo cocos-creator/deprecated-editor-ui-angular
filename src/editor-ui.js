@@ -10,6 +10,7 @@ angular.module("fireUI", [
     "fireUI.customField",
     "fireUI.field",
     "fireUI.label",
+    "fireUI.section",
     "fireUI.select",
     "fireUI.unitInput",
 ])

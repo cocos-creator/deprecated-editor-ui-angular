@@ -1,0 +1,68 @@
+angular.module("fireUI.section", [] )
+.directive( 'fireUiSection', function () {
+    function preLink ( scope, element, attrs ) {
+        // init tabindex
+        var title = element.find('#title');
+        title[0].tabIndex = FIRE.getParentTabIndex(title[0])+1;
+    }
+
+    function postLink ( scope, element, attrs ) {
+        var title = element.find('#title');
+        var body = element.find('#body');
+        var foldIcon = element.find('#icon');
+
+        scope.folded = false;
+
+        title.on ( 'click', function ( event ) {
+            scope.folded = !scope.folded;
+            body.toggleClass('hide', scope.folded);
+            foldIcon.toggleClass('fa-caret-down', !scope.folded);
+            foldIcon.toggleClass('fa-caret-right', scope.folded);
+        })
+        .on ( 'focusin', function ( event ) {
+            title.addClass('focused');
+        })
+        .on ( 'focusout', function ( event ) {
+            if ( title.hasClass('focused') === false )
+                return;
+
+            if ( title.find( event.relatedTarget ).length === 0 ) {
+                title.removeClass('focused');
+            }
+        })
+        ;
+
+        // // element
+        // element
+        // .on ( 'focusin', function ( event ) {
+        //     element.addClass('focused');
+        // })
+        // .on ( 'focusout', function ( event ) {
+        //     if ( element.hasClass('focused') === false )
+        //         return;
+
+        //     if ( element.find( event.relatedTarget ).length === 0 ) {
+        //         element.removeClass('focused');
+        //     }
+        // })
+        // ;
+    }
+
+    function compile ( element, attrs ) {
+        return {
+            pre: preLink,
+            post: postLink,
+        };
+    }
+
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: {
+            title: "@fiTitle",
+        },
+        templateUrl: 'section/section.html',
+        compile: compile,
+    };
+});
