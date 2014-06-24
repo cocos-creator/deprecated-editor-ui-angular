@@ -6,11 +6,6 @@ angular.module("fireUI.button", [] )
     }
 
     function postLink ( scope, element, attrs ) {
-        //
-        scope.onClick = function () {
-            // TODO
-        };
-
         // element
         element
         .on ( 'focusin', function ( event ) {
@@ -24,6 +19,12 @@ angular.module("fireUI.button", [] )
                 element.removeClass('focused');
             }
         })
+        // .on ( 'click', function ( event ) {
+        //     scope.$apply( function() {
+        //         scope.doClick();
+        //     });
+        //     return false;
+        // })
         ;
     }
 
@@ -39,6 +40,7 @@ angular.module("fireUI.button", [] )
         replace: true,
         transclude: true,
         scope: {
+            doClick: '&fiClick',
         },
         templateUrl: 'button/button.html',
         compile: compile,
