@@ -47,7 +47,7 @@ angular.module("fireUI.field", [
                 break;
 
             case "boolean":
-                el = $compile( "<div class='flex-2'><fire-ui-checkbox fi-bind='bind'></fire-ui-checkbox></div>" )( scope );
+                el = $compile( "<fire-ui-checkbox class='flex-2' fi-bind='bind'></fire-ui-checkbox>" )( scope );
                 element.append(el);
                 break;
 

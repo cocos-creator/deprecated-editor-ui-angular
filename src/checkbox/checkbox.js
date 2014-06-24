@@ -10,6 +10,21 @@ angular.module("fireUI.checkbox", [] )
         scope.onClick = function () {
             scope.bind = !scope.bind;
         };
+
+        // element
+        element
+        .on ( 'focusin', function ( event ) {
+            element.addClass('focused');
+        })
+        .on ( 'focusout', function ( event ) {
+            if ( element.hasClass('focused') === false )
+                return;
+
+            if ( element.find( event.relatedTarget ).length === 0 ) {
+                element.removeClass('focused');
+            }
+        })
+        ;
     }
 
     function compile ( element, attrs ) {

@@ -7,10 +7,6 @@
 
     cursor: pointer 
 
-    // &.focused {                         
-    //     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1), 0px 0 0 1px #0c70a6, 0px 0 4px 1px rgba(12,112,166,0.8)
-    // }
-
     .border {
         display-flexbox()
         flex-direction: row
@@ -58,7 +54,7 @@
         z-index: 11
         min-width: 100%
         outline: 1px solid #222
-        margin-top: 1px
+        margin-top: 4px
         padding: 4px
 
         color: #eee
@@ -85,6 +81,20 @@
             &:hover {
                 background: #3875d7
             }
+        }
+    }
+
+    transition: box-shadow .3s ease
+
+    &.focused {                         
+        box-shadow: 
+            inset 0 0 0 1px rgba(0,0,0,0.1), 
+            0px 0 0 1px #0c70a6, 
+            0px 0 4px 1px rgba(12,112,166,0.8)
+
+        .border {
+            border: 1px solid rgba(0,0,0,1)
+            background-color: #404040
         }
     }
 }
