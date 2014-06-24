@@ -29,7 +29,8 @@ angular.module("fireUI.customField", [] )
             }
         })
         .on('mousedown', function(event) {
-            if ( labelEL.is(event.target) === false && 
+            if ( element.is(event.target) === false &&
+                 labelEL.is(event.target) === false && 
                  labelEL.find(event.target).length === 0 )
                 return;
 
