@@ -8,9 +8,16 @@ angular.module("fireUI.textInput", [] )
 
     function postLink ( scope, element, attrs ) {
         var input = element.children('#input');
+        input.val(scope.bind);
 
         // input
         input
+        .on ( 'input', function (event) {
+            scope.bind = input.val();
+            scope.$apply();
+
+            return false;
+        } )
         .on ( 'click', function (event) {
             return false;
         } )
@@ -56,6 +63,16 @@ angular.module("fireUI.textInput", [] )
             }
         })
         ;
+
+        // scope
+        scope.$watch ( 'bind', function ( val, old ) {
+            input.val(val);
+        });
+
+        scope.$on('$destroy', function () {
+            input.off();
+            element.off();
+        });
     }
 
     function compile ( element, attrs ) {

@@ -40,6 +40,18 @@ angular.module('testApp', ['fireUI'])
         $scope.myPixel = rangeRandomInt(-1000, 1000);
     };
 
+    // myText
+    $scope.myText = "Hello World";
+    $scope.myTextClick = function () {
+        var textList = [
+            "Hello World",
+            "FooBar",
+            "I'm Johnny Wu!",
+            "Who are you?"
+        ];
+        $scope.myText = textList[rangeRandomInt(0, textList.length-1)];
+    };
+
     // mySelect
     $scope.mySelect = 3;
     $scope.mySelectList = [
@@ -114,6 +126,15 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">
+            <fire-ui-text-input fi-bind="myText"></fire-ui-text-input>                                                      
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="myTextClick()">Change</fire-ui-button>
+            <span class="space"></span>                                                                            
+            <fire-ui-label>myText = {{myText}}</fire-ui-label>
+        </div>
+        <span class="space"></span>                                                                            
+
+        <div class="flex-row">
             <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="mySelectClick()">Change</fire-ui-button>
@@ -149,6 +170,7 @@ span.space {
         <fire-ui-field fi-bind="mySelect" fi-type="enum" fi-enum-type="FIRE.Atlas.SortBy"></fire-ui-field>                                                             
         <fire-ui-field fi-bind="myColor"></fire-ui-field>                                                             
         <fire-ui-field fi-bind="myVec2"></fire-ui-field>                                                             
+        <fire-ui-field fi-bind="myText"></fire-ui-field>                                                             
     </fire-ui-section>
 </div>
 </body>

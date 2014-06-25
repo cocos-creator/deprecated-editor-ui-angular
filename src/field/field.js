@@ -53,7 +53,8 @@ angular.module("fireUI.field", [
                 break;
 
             case "string":
-                // TODO
+                el = $compile( "<fire-ui-text-input class='flex-2' fi-bind='bind'></fire-ui-text-input>" )( scope );
+                element.append(el);
                 break;
 
             case "object":

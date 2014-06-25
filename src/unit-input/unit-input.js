@@ -49,30 +49,6 @@ angular.module("fireUI.unitInput", [] )
         };
         input.val(convert(scope.bind));
 
-        // scope
-        scope.onUnitClick = function () {
-            input.focus();
-        };
-
-        scope.onIncrease = function ( event ) {
-            scope.bind = convert( scope.bind + interval );
-            event.stopPropagation();
-        };
-
-        scope.onDecrease = function ( event ) {
-            scope.bind = convert( scope.bind - interval );
-            event.stopPropagation();
-        };
-
-        scope.$watch ( 'bind', function ( val, old ) {
-            input.val(convert(val));
-        });
-
-        scope.$on('$destroy', function () {
-            input.off();
-            element.off();
-        });
-
         // input
         input
         .on ( 'input', function (event) {
@@ -139,6 +115,30 @@ angular.module("fireUI.unitInput", [] )
             }
         })
         ;
+
+        // scope
+        scope.onUnitClick = function () {
+            input.focus();
+        };
+
+        scope.onIncrease = function ( event ) {
+            scope.bind = convert( scope.bind + interval );
+            event.stopPropagation();
+        };
+
+        scope.onDecrease = function ( event ) {
+            scope.bind = convert( scope.bind - interval );
+            event.stopPropagation();
+        };
+
+        scope.$watch ( 'bind', function ( val, old ) {
+            input.val(convert(val));
+        });
+
+        scope.$on('$destroy', function () {
+            input.off();
+            element.off();
+        });
     }
 
     function compile ( element, attrs ) {
