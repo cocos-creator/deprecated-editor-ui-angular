@@ -105,7 +105,9 @@ angular.module("fireUI.color", [
                 return false;
             }
 
-            if ( element.find( event.relatedTarget ).length === 0 ) {
+            if ( element.is(event.relatedTarget) === false &&
+                 element.find( event.relatedTarget ).length === 0 ) 
+            {
                 element.removeClass('focused');
                 scope.hideColorPicker();
             }
