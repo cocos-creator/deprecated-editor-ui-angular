@@ -12,6 +12,7 @@ angular.module("fireUI", [
     "fireUI.label",
     "fireUI.section",
     "fireUI.select",
+    "fireUI.textArea",
     "fireUI.textInput",
     "fireUI.unitInput",
     "fireUI.vec2",
