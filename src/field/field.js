@@ -5,6 +5,7 @@ angular.module("fireUI.field", [
     "fireUI.label",
     "fireUI.select",
     "fireUI.unitInput",
+    "fireUI.vec2",
 ] )
 .directive( 'fireUiField', ['$compile', function ( $compile ) {
     function preLink ( scope, element, attrs ) {

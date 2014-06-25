@@ -6,7 +6,7 @@ angular.module("fireUI.section", [] )
         title[0].tabIndex = FIRE.getParentTabIndex(title[0])+1;
     }
 
-    function postLink ( scope, element, attrs ) {
+    function postLink ( scope, element, attrs, ctrl, transclude ) {
         var title = element.find('#title');
         var body = element.find('#body');
         var foldIcon = element.find('#icon');
@@ -46,6 +46,11 @@ angular.module("fireUI.section", [] )
         //     }
         // })
         // ;
+
+        // reference: http://angular-tips.com/blog/2014/03/transclusion-and-scopes/
+        transclude(scope.$parent, function(clone, scope) {
+            body.append(clone);
+        });
     }
 
     function compile ( element, attrs ) {

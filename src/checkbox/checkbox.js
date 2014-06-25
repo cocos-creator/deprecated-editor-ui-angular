@@ -8,7 +8,7 @@ angular.module("fireUI.checkbox", [] )
     function postLink ( scope, element, attrs ) {
         //
         scope.onClick = function () {
-            scope.bind = !scope.bind;
+            scope.checked = !scope.checked;
         };
 
         // element
@@ -38,7 +38,7 @@ angular.module("fireUI.checkbox", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            bind: '=fiBind',
+            checked: '=fiBind',
         },
         templateUrl: 'checkbox/checkbox.html',
         compile: compile,

@@ -92,41 +92,56 @@ span.space {
 
 <body>
 <div ng-controller="init">
-
-    <button ng-click="myCheckedClick()">Change</button> myChecked = {{myChecked}} <br/>                    
-    <button ng-click="myPixelClick()">Change</button> myPixel = {{myPixel}} <br/>                          
-    <button ng-click="mySelectClick()">Change</button> mySelect = {{mySelect}} <br/>                       
-    <button ng-click="myColorClick()">Change</button> myColor = {{myColor.toString()}} <br/>               
-    <button ng-click="myVec2Click()">Change</button> myVec2 = {{myVec2.toString()}} <br/>               
-
-    <hr />                                                                                                 
     <span class="space" style="height: 20px"></span>                                                       
 
     <fire-ui-section fi-title="My Section">
-        <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>                                              
+        <div class="flex-row">
+            <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>                                              
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="myCheckedClick()">Change</fire-ui-button> 
+            <span class="space"></span>                                                                            
+            <fire-ui-label>myChecked = {{myChecked}}</fire-ui-label>
+        </div>
         <span class="space"></span>                                                                            
 
-        <fire-ui-unit-input fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unit-input>                   
+        <div class="flex-row">
+            <fire-ui-unit-input fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unit-input>                   
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="myPixelClick()">Change</fire-ui-button>
+            <span class="space"></span>                                                                            
+            <fire-ui-label>myPixel = {{myPixel}}</fire-ui-label>
+        </div>
         <span class="space"></span>                                                                            
 
-        <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
+        <div class="flex-row">
+            <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="mySelectClick()">Change</fire-ui-button>
+            <span class="space"></span>                                                                            
+            <fire-ui-label>mySelect = {{mySelect}}</fire-ui-label>
+        </div>
         <span class="space"></span>                                                                            
 
-        <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
-        <span class="space"></span>                                                                            
+        <div class="flex-row">
+            <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="myColorClick()">Change</fire-ui-button>
+            <span class="space"></span>                                                                            
+            <fire-ui-label>myColor = {{myColor.toString()}}</fire-ui-label>
+        </div>
+        <span class="space"></span>
 
-        <fire-ui-vec2 fi-bind="myVec2"></fire-ui-vec2>                                                      
-        <span class="space"></span>                                                                            
-
-        <fire-ui-label>Hello World</fire-ui-label>                                                             
-        <span class="space"></span>                                                                            
-
-        <fire-ui-button ng-click="myColorClick()">OK</fire-ui-button> 
-        <fire-ui-button>Cancel</fire-ui-button>                                                             
+        <div class="flex-row">
+            <fire-ui-vec2 fi-bind="myVec2"></fire-ui-vec2>                                                      
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="myVec2Click()">Change</fire-ui-button>
+            <span class="space"></span>                                                                            
+            <fire-ui-label>myVec2 = {{myVec2.toString()}}</fire-ui-label>
+        </div>
         <span class="space"></span>                                                                            
     </fire-ui-section>
 
-    <hr />                                                                                                 
+    <span class="space" style="height: 20px"></span>                                                       
 
     <fire-ui-section fi-title="My Section 2">
         <fire-ui-field fi-bind="myChecked"></fire-ui-field>                                                             
