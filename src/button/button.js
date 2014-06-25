@@ -1,8 +1,10 @@
 angular.module("fireUI.button", [] )
 .directive( 'fireUiButton', function () {
     function preLink ( scope, element, attrs ) {
+        var btn = element.find('button');
+
         // init tabindex
-        element[0].tabIndex = FIRE.getParentTabIndex(element[0])+1;
+        btn[0].tabIndex = FIRE.getParentTabIndex(btn[0])+1;
     }
 
     function postLink ( scope, element, attrs ) {
@@ -39,9 +41,9 @@ angular.module("fireUI.button", [] )
         restrict: 'E',
         replace: true,
         transclude: true,
-        scope: {
-            doClick: '&fiClick',
-        },
+        // scope: {
+        //     doClick: '&fiClick',
+        // },
         templateUrl: 'button/button.html',
         compile: compile,
     };
