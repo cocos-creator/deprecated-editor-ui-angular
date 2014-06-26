@@ -52,6 +52,18 @@ angular.module('testApp', ['fireUI'])
         $scope.myText = textList[rangeRandomInt(0, textList.length-1)];
     };
 
+    // myMultiText
+    $scope.myMultiText = "Hello World\nHello World FooBar\nHello World I'm Johnny Wu\nCool!";
+    $scope.myMultiTextClick = function () {
+        var textList = [
+            "Hello World\nHello World",
+            "FooBar\nFooBar",
+            "I'm Johnny Wu!\nI'm Johnny Wu",
+            "Who are you?\nWho are you"
+        ];
+        $scope.myMultiText = textList[rangeRandomInt(0, textList.length-1)];
+    };
+
     // mySelect
     $scope.mySelect = 3;
     $scope.mySelectList = [
@@ -162,11 +174,16 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">                                                                                              
-            <fire-ui-text-area fi-bind="myText"></fire-ui-text-area>                                                        
-            <!-- <span class="space"></span>                                                                             -->
-            <!-- <fire-ui-button ng-click="myVec2Click()">Change</fire-ui-button>                                        -->
-            <!-- <span class="space"></span>                                                                             -->
-            <!-- <fire-ui-label>myVec2 = {{myVec2.toString()}}</fire-ui-label>                                           -->
+            <fire-ui-text-area class="flex-3" fi-bind="myMultiText"></fire-ui-text-area>                                                        
+            <span class="space"></span>                                                                            
+            <fire-ui-button ng-click="myMultiTextClick()">Change</fire-ui-button>                                       
+            <span class="space"></span>                                                                            
+            <div class="flex-1 flex-column">
+                <fire-ui-label>myMultiText = </fire-ui-label>                                         
+                <pre style="font-size: 10px; white-space: pre-line;">
+                    {{myMultiText.toString()}}
+                </pre>
+            </div>
         </div>                                                                                                              
         <span class="space"></span>                                                                            
     </fire-ui-section>

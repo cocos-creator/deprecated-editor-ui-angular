@@ -7,40 +7,40 @@ angular.module("fireUI.textArea", [] )
     }
 
     function postLink ( scope, element, attrs ) {
-        // var input = element.children('#input');
-        // input.val(scope.bind);
+        var area = element.children('#area');
+        area.val(scope.bind);
 
-        // // input
-        // input
-        // .on ( 'input', function (event) {
-        //     scope.bind = input.val();
-        //     scope.$apply();
+        // area
+        area
+        .on ( 'input', function (event) {
+            scope.bind = area.val();
+            scope.$apply();
 
-        //     return false;
-        // } )
-        // .on ( 'click', function (event) {
-        //     return false;
-        // } )
-        // .on ( 'keydown', function (event) {
-        //     switch ( event.which ) {
-        //         // enter
-        //         case 13:
-        //             scope.bind = input.val();
-        //             scope.$apply();
-        //             input.val(scope.bind);
-        //             input.blur(); 
-        //         return false;
-
-        //         // esc
-        //         case 27:
-        //             scope.bind = scope.lastVal;
-        //             scope.$apply();
-        //             input.val(scope.bind);
-        //             input.blur(); 
-        //         return false;
-        //     }
-        // } )
-        // ;
+            return false;
+        } )
+        .on ( 'click', function (event) {
+            return false;
+        } )
+        .on ( 'keydown', function (event) {
+            switch ( event.which ) {
+                // NOTE: enter will be used as new-line, ESC here will be confirm behavior
+                // NOTE: textarea already have ctrl-z undo behavior
+                // esc
+                case 27:
+                    scope.bind = area.val();
+                    scope.$apply();
+                    area.val(scope.bind);
+                    area.blur(); 
+                return false;
+            }
+        } )
+        .on ( 'keyup', function (event) {
+            var areaEL = area[0];
+            var adjustedHeight = Math.max(areaEL.scrollHeight, areaEL.clientHeight);
+            if ( adjustedHeight > areaEL.clientHeight )
+                areaEL.style.height = adjustedHeight + "px";
+        } )
+        ;
 
         // element
         element
@@ -54,25 +54,25 @@ angular.module("fireUI.textArea", [] )
 
             //
             if ( element.find( event.relatedTarget ).length === 0 ) {
-                // var val = area.val();
-                // scope.bind = val;
-                // scope.$apply();
-                // area.val(val);
+                var val = area.val();
+                scope.bind = val;
+                scope.$apply();
+                area.val(val);
 
                 element.removeClass('focused');
             }
         })
         ;
 
-        // // scope
-        // scope.$watch ( 'bind', function ( val, old ) {
-        //     input.val(val);
-        // });
+        // scope
+        scope.$watch ( 'bind', function ( val, old ) {
+            area.val(val);
+        });
 
-        // scope.$on('$destroy', function () {
-        //     input.off();
-        //     element.off();
-        // });
+        scope.$on('$destroy', function () {
+            area.off();
+            element.off();
+        });
     }
 
     function compile ( element, attrs ) {
