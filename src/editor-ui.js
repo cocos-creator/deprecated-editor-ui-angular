@@ -15,6 +15,7 @@ angular.module("fireUI", [
     "fireUI.textArea",
     "fireUI.textInput",
     "fireUI.unitInput",
+    "fireUI.uploader",
     "fireUI.vec2",
 ])
 ;
