@@ -1,5 +1,21 @@
 angular.module("fireUI.textArea", [] )
 .directive( 'fireUiTextArea', function () {
+    function adjust ( scope, element ) {
+        var area = element.children('#area');
+        var areaEL = area[0];
+
+        // NOTE: this will make sure the scrollHeight calculate even we shrink it.
+        areaEL.style.height = "0px";
+        areaEL.style.height = areaEL.scrollHeight + "px";
+
+        if ( areaEL.scrollWidth > areaEL.clientWidth &&
+             areaEL.style.overflowX !== 'hidden' )
+        {
+            var scrollBarHeight = areaEL.offsetHeight - areaEL.clientHeight;
+            areaEL.style.height = (areaEL.scrollHeight + scrollBarHeight) + "px";
+        }
+    } 
+
     function preLink ( scope, element, attrs ) {
         // init tabindex
         var area = element.children('#area');
@@ -9,6 +25,7 @@ angular.module("fireUI.textArea", [] )
     function postLink ( scope, element, attrs ) {
         var area = element.children('#area');
         area.val(scope.bind);
+        adjust ( scope, element );
 
         // area
         area
@@ -16,6 +33,8 @@ angular.module("fireUI.textArea", [] )
             scope.bind = area.val();
             scope.$apply();
 
+            // adjust
+            adjust ( scope, element );
             return false;
         } )
         .on ( 'click', function (event) {
@@ -30,15 +49,10 @@ angular.module("fireUI.textArea", [] )
                     scope.bind = area.val();
                     scope.$apply();
                     area.val(scope.bind);
+                    adjust ( scope, element );
                     area.blur(); 
                 return false;
             }
-        } )
-        .on ( 'keyup', function (event) {
-            var areaEL = area[0];
-            var adjustedHeight = Math.max(areaEL.scrollHeight, areaEL.clientHeight);
-            if ( adjustedHeight > areaEL.clientHeight )
-                areaEL.style.height = adjustedHeight + "px";
         } )
         ;
 
@@ -58,6 +72,7 @@ angular.module("fireUI.textArea", [] )
                 scope.bind = val;
                 scope.$apply();
                 area.val(val);
+                adjust ( scope, element );
 
                 element.removeClass('focused');
             }
@@ -67,6 +82,7 @@ angular.module("fireUI.textArea", [] )
         // scope
         scope.$watch ( 'bind', function ( val, old ) {
             area.val(val);
+            adjust ( scope, element );
         });
 
         scope.$on('$destroy', function () {

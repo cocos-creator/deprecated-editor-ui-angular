@@ -53,8 +53,14 @@ angular.module("fireUI.field", [
                 break;
 
             case "string":
-                el = $compile( "<fire-ui-text-input class='flex-2' fi-bind='bind'></fire-ui-text-input>" )( scope );
-                element.append(el);
+                if ( scope.textMode === 'single' ) {
+                    el = $compile( "<fire-ui-text-input class='flex-2' fi-bind='bind'></fire-ui-text-input>" )( scope );
+                    element.append(el);
+                }
+                else if ( scope.textMode === 'multi' ) {
+                    el = $compile( "<fire-ui-text-area class='flex-2' fi-bind='bind'></fire-ui-text-area>" )( scope );
+                    element.append(el);
+                }
                 break;
 
             case "object":
@@ -116,6 +122,7 @@ angular.module("fireUI.field", [
         attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : FIRE.camelCaseToHuman(attrs.fiBind);
         attrs.fiType = (attrs.fiType!==undefined) ? attrs.fiType : 'int';
         attrs.fiEnumType = (attrs.fiEnumType!==undefined) ? attrs.fiEnumType : '';
+        attrs.fiTextMode = (attrs.fiTextMode!==undefined) ? attrs.fiTextMode : 'single';
 
         return {
             pre: preLink,
@@ -132,6 +139,7 @@ angular.module("fireUI.field", [
             type: '@fiType',
             enumType: '@fiEnumType',
             enumList: '=fiEnumList',
+            textMode: '@fiTextMode',
         },
         templateUrl: 'field/field.html',
         compile: compile,

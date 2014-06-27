@@ -56,9 +56,9 @@ angular.module('testApp', ['fireUI'])
     $scope.myMultiText = "Hello World\nHello World FooBar\nHello World I'm Johnny Wu\nCool!";
     $scope.myMultiTextClick = function () {
         var textList = [
-            "Hello World\nHello World",
+            "Hello World\nHello World\nHello World",
             "FooBar\nFooBar",
-            "I'm Johnny Wu!\nI'm Johnny Wu",
+            "I'm Johnny Wu!\nI'm Johnny Wu\nI'm Johnny Wu\nI'm Johnny Wu",
             "Who are you?\nWho are you"
         ];
         $scope.myMultiText = textList[rangeRandomInt(0, textList.length-1)];
@@ -197,6 +197,7 @@ span.space {
         <fire-ui-field fi-bind="myColor"></fire-ui-field>                                                             
         <fire-ui-field fi-bind="myVec2"></fire-ui-field>                                                             
         <fire-ui-field fi-bind="myText"></fire-ui-field>                                                             
+        <fire-ui-field fi-bind="myMultiText" fi-text-mode="multi"></fire-ui-field>                                                             
     </fire-ui-section>
 </div>
 </body>
