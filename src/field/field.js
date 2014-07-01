@@ -37,31 +37,31 @@ angular.module("fireUI.field", [
                     else {
                         scope.finalEnumList = scope.enumList.slice(0);
                     }
-                    labelEL = compileLabelEL(scope,'');
+                    labelEL = compileLabelEL(scope,'flex-1');
                     fieldEL = $compile( "<fire-ui-select class='flex-2' fi-bind='bind' fi-options='finalEnumList'></fire-ui-select>" )( scope );      
                 }
                 else if ( scope.type === 'int' ) {
-                    labelEL = compileLabelEL(scope,'');
+                    labelEL = compileLabelEL(scope,'flex-1');
                     fieldEL = $compile( "<fire-ui-unit-input class='flex-2' fi-type='int' fi-bind='bind'></fire-ui-unit-input>" )( scope );
                 }
                 else if ( scope.type === 'float' ) {
-                    labelEL = compileLabelEL(scope,'');
+                    labelEL = compileLabelEL(scope,'flex-1');
                     fieldEL = $compile( "<fire-ui-unit-input class='flex-2' fi-type='float' fi-bind='bind'></fire-ui-unit-input>" )( scope );
                 }
                 break;
 
             case "boolean":
-                labelEL = compileLabelEL(scope,'');
+                labelEL = compileLabelEL(scope,'flex-1');
                 fieldEL = $compile( "<fire-ui-checkbox class='flex-2' fi-bind='bind'></fire-ui-checkbox>" )( scope );
                 break;
 
             case "string":
                 if ( scope.textMode === 'single' ) {
-                    labelEL = compileLabelEL(scope,'');
+                    labelEL = compileLabelEL(scope,'flex-1');
                     fieldEL = $compile( "<fire-ui-text-input class='flex-2' fi-bind='bind'></fire-ui-text-input>" )( scope );
                 }
                 else if ( scope.textMode === 'multi' ) {
-                    labelEL = compileLabelEL(scope,'flex-align-self-start');
+                    labelEL = compileLabelEL(scope,'flex-1 flex-align-self-start');
                     fieldEL = $compile( "<fire-ui-text-area class='flex-2' fi-bind='bind'></fire-ui-text-area>" )( scope );
                 }
                 break;
@@ -74,12 +74,12 @@ angular.module("fireUI.field", [
                     var className = FIRE.getClassName(scope.bind);
                     switch ( className ) {
                         case "FIRE.Color":
-                            labelEL = compileLabelEL(scope,'');
+                            labelEL = compileLabelEL(scope,'flex-1');
                             fieldEL = $compile( "<fire-ui-color class='flex-2' fi-bind='bind'></fire-ui-color>" )( scope );
                             break;
 
                         case "FIRE.Vec2":
-                            labelEL = compileLabelEL(scope,'');
+                            labelEL = compileLabelEL(scope,'flex-1');
                             fieldEL = $compile( "<fire-ui-vec2 class='flex-2' fi-bind='bind'></fire-ui-vec2>" )( scope );
                             break;
                     }
