@@ -106,6 +106,8 @@ angular.module("fireUI.colorPicker", [
                 editingHSV = false;
                 return false;
             });
+
+            return false;
         })
         ;
 
@@ -145,6 +147,8 @@ angular.module("fireUI.colorPicker", [
                 editingHSV = false;
                 return false;
             });
+
+            return false;
         })
         ;
 
@@ -174,6 +178,8 @@ angular.module("fireUI.colorPicker", [
                 FIRE.removeDragGhost ();
                 return false;
             });
+
+            return false;
         })
         ;
     }

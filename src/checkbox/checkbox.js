@@ -7,22 +7,24 @@ angular.module("fireUI.checkbox", [] )
 
     function postLink ( scope, element, attrs ) {
         //
-        scope.onClick = function () {
+        scope.clickAction = function ( event ) {
             scope.checked = !scope.checked;
+            return false;
         };
 
         // element
         element
-        .on ( 'focusin', function ( event ) {
+        .on ( 'focus', function ( event ) {
             element.addClass('focused');
         })
-        .on ( 'focusout', function ( event ) {
+        .on ( 'blur', function ( event ) {
             if ( element.hasClass('focused') === false )
                 return;
 
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                element.removeClass('focused');
-            }
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            element.removeClass('focused');
         })
         ;
     }

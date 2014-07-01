@@ -19,9 +19,10 @@ angular.module("fireUI.uploader", [] )
             if ( element.hasClass('focused') === false )
                 return;
 
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                element.removeClass('focused');
-            }
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            element.removeClass('focused');
         })
         ;
 

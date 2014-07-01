@@ -53,14 +53,15 @@ angular.module("fireUI.textInput", [] )
                 return;
 
             //
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                var val = input.val();
-                scope.bind = val;
-                scope.$apply();
-                input.val(val);
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            var val = input.val();
+            scope.bind = val;
+            scope.$apply();
+            input.val(val);
 
-                element.removeClass('focused');
-            }
+            element.removeClass('focused');
         })
         ;
 

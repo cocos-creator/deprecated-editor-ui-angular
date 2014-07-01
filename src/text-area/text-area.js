@@ -67,15 +67,16 @@ angular.module("fireUI.textArea", [] )
                 return;
 
             //
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                var val = area.val();
-                scope.bind = val;
-                scope.$apply();
-                area.val(val);
-                adjust ( scope, element );
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            var val = area.val();
+            scope.bind = val;
+            scope.$apply();
+            area.val(val);
+            adjust ( scope, element );
 
-                element.removeClass('focused');
-            }
+            element.removeClass('focused');
         })
         ;
 

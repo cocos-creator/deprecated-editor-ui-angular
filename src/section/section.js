@@ -26,26 +26,12 @@ angular.module("fireUI.section", [] )
             if ( title.hasClass('focused') === false )
                 return;
 
-            if ( title.find( event.relatedTarget ).length === 0 ) {
-                title.removeClass('focused');
-            }
+            if ( title.find( event.relatedTarget ).length )
+                return;
+            
+            title.removeClass('focused');
         })
         ;
-
-        // // element
-        // element
-        // .on ( 'focusin', function ( event ) {
-        //     element.addClass('focused');
-        // })
-        // .on ( 'focusout', function ( event ) {
-        //     if ( element.hasClass('focused') === false )
-        //         return;
-
-        //     if ( element.find( event.relatedTarget ).length === 0 ) {
-        //         element.removeClass('focused');
-        //     }
-        // })
-        // ;
 
         // reference: http://angular-tips.com/blog/2014/03/transclusion-and-scopes/
         transclude(scope.$parent, function(clone, scope) {

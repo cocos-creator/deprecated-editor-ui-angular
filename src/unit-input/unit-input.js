@@ -92,27 +92,23 @@ angular.module("fireUI.unitInput", [] )
                 return false;
             }
         } )
-        ;
-
-        // element
-        element
-        .on('focusin', function(event) {
+        .on('focus', function(event) {
             scope.lastVal = scope.bind;
             element.addClass('focused');
         })
-        .on('focusout', function(event) {
+        .on('blur', function(event) {
             if ( element.hasClass('focused') === false )
                 return;
 
-            //
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                var val = convert(input.val());
-                scope.bind = val;
-                scope.$apply();
-                input.val(val);
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            var val = convert(input.val());
+            scope.bind = val;
+            scope.$apply();
+            input.val(val);
 
-                element.removeClass('focused');
-            }
+            element.removeClass('focused');
         })
         ;
 
@@ -123,11 +119,13 @@ angular.module("fireUI.unitInput", [] )
 
         scope.onIncrease = function ( event ) {
             scope.bind = convert( scope.bind + interval );
+            input.focus();
             event.stopPropagation();
         };
 
         scope.onDecrease = function ( event ) {
             scope.bind = convert( scope.bind - interval );
+            input.focus();
             event.stopPropagation();
         };
 

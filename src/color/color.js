@@ -91,7 +91,7 @@ angular.module("fireUI.color", [
 
         // element
         element
-        .on ( 'focusin', function ( event ) {
+        .on ( 'focus', function ( event ) {
             element.addClass('focused');
         })
         .on ( 'focusout', function ( event ) {
@@ -102,15 +102,15 @@ angular.module("fireUI.color", [
                  element.find('.fire-ui-unit-input').find(event.target).length > 0 )
             {
                 element.focus();
-                return false;
+                return;
             }
 
-            if ( element.is(event.relatedTarget) === false &&
-                 element.find( event.relatedTarget ).length === 0 ) 
-            {
-                element.removeClass('focused');
-                scope.hideColorPicker();
-            }
+            if ( element.is(event.relatedTarget) || 
+                 element.find( event.relatedTarget ).length ) 
+                return;
+
+            element.removeClass('focused');
+            scope.hideColorPicker();
         })
         .on ( 'keydown', function (event) {
             switch ( event.which ) {

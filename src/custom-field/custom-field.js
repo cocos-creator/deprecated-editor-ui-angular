@@ -23,10 +23,11 @@ angular.module("fireUI.customField", [] )
             if ( element.hasClass('focused') === false )
                 return;
             //
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                element.removeClass('focused');
-                labelEL.removeClass('focused');
-            }
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            element.removeClass('focused');
+            labelEL.removeClass('focused');
         })
         .on('mousedown', function(event) {
             if ( element.is(event.target) === false &&
@@ -40,6 +41,7 @@ angular.module("fireUI.customField", [] )
             }
 
             event.preventDefault();
+            return false;
         })
         ;
     }

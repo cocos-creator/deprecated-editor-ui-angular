@@ -104,11 +104,12 @@ angular.module("fireUI.field", [
                 return;
 
             //
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                element.removeClass('focused');
-                labelEL.removeClass('focused');
-                fieldEL.removeClass('focused');
-            }
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            element.removeClass('focused');
+            labelEL.removeClass('focused');
+            fieldEL.removeClass('focused');
         })
         .on('mousedown', function(event) {
             if ( element.is(event.target) === false &&
@@ -122,6 +123,7 @@ angular.module("fireUI.field", [
             }
 
             event.preventDefault();
+            return false;
         })
         ;
     }

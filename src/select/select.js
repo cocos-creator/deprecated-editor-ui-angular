@@ -45,18 +45,19 @@ angular.module("fireUI.select", [] )
             menu.toggleClass('hide');
             scope.$apply();
         })
-        .on('focusin', function() {
+        .on('focus', function() {
             element.addClass('focused');
         })
-        .on('focusout', function () {
+        .on('blur', function () {
             if ( element.hasClass('focused') === false )
                 return;
 
-            if ( element.find( event.relatedTarget ).length === 0 ) {
-                menu.addClass('hide');
-                scope.$apply();
-                element.removeClass('focused');
-            }
+            if ( element.find( event.relatedTarget ).length )
+                return;
+            
+            menu.addClass('hide');
+            scope.$apply();
+            element.removeClass('focused');
         })
         .on ( 'keydown', function () {
             switch ( event.which ) {
