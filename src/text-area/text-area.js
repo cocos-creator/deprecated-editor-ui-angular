@@ -32,9 +32,6 @@ angular.module("fireUI.textArea", [] )
         .on ( 'input', function (event) {
             scope.value = area.val();
             scope.$apply();
-
-            // adjust
-            adjust ( scope, element );
             return false;
         } )
         .on ( 'click', function (event) {
@@ -46,23 +43,15 @@ angular.module("fireUI.textArea", [] )
                 // NOTE: textarea already have ctrl-z undo behavior
                 // esc
                 case 27:
-                    scope.value = area.val();
-                    scope.$apply();
-                    area.val(scope.value);
-                    adjust ( scope, element );
                     area.blur(); 
                 return false;
             }
         } )
-        ;
-
-        // element
-        element
-        .on('focusin', function(event) {
+        .on('focus', function(event) {
             scope.lastVal = scope.value;
             element.addClass('focused');
         })
-        .on('focusout', function(event) {
+        .on('blur', function(event) {
             if ( element.hasClass('focused') === false )
                 return;
 
@@ -70,12 +59,6 @@ angular.module("fireUI.textArea", [] )
             if ( element.find( event.relatedTarget ).length )
                 return;
             
-            var val = area.val();
-            scope.value = val;
-            scope.$apply();
-            area.val(val);
-            adjust ( scope, element );
-
             element.removeClass('focused');
         })
         ;

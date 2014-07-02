@@ -35,7 +35,6 @@ angular.module("fireUI.textInput", [] )
                 case 27:
                     scope.value = scope.lastVal;
                     scope.$apply();
-                    input.val(scope.value);
                     input.blur(); 
                 return false;
             }
@@ -52,11 +51,6 @@ angular.module("fireUI.textInput", [] )
             if ( element.find( event.relatedTarget ).length )
                 return;
             
-            var val = input.val();
-            scope.value = val;
-            scope.$apply();
-            input.val(val);
-
             element.removeClass('focused');
         })
         ;
