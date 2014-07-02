@@ -17,7 +17,7 @@ angular.module("fireUI.vec2", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            bind: '=fiBind',
+            value: '=fiValue',
         },
         templateUrl: 'vec2/vec2.html',
         compile: compile,

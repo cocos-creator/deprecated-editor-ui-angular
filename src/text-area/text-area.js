@@ -24,13 +24,13 @@ angular.module("fireUI.textArea", [] )
 
     function postLink ( scope, element, attrs ) {
         var area = element.children('#area');
-        area.val(scope.bind);
+        area.val(scope.value);
         adjust ( scope, element );
 
         // area
         area
         .on ( 'input', function (event) {
-            scope.bind = area.val();
+            scope.value = area.val();
             scope.$apply();
 
             // adjust
@@ -46,9 +46,9 @@ angular.module("fireUI.textArea", [] )
                 // NOTE: textarea already have ctrl-z undo behavior
                 // esc
                 case 27:
-                    scope.bind = area.val();
+                    scope.value = area.val();
                     scope.$apply();
-                    area.val(scope.bind);
+                    area.val(scope.value);
                     adjust ( scope, element );
                     area.blur(); 
                 return false;
@@ -59,7 +59,7 @@ angular.module("fireUI.textArea", [] )
         // element
         element
         .on('focusin', function(event) {
-            scope.lastVal = scope.bind;
+            scope.lastVal = scope.value;
             element.addClass('focused');
         })
         .on('focusout', function(event) {
@@ -71,7 +71,7 @@ angular.module("fireUI.textArea", [] )
                 return;
             
             var val = area.val();
-            scope.bind = val;
+            scope.value = val;
             scope.$apply();
             area.val(val);
             adjust ( scope, element );
@@ -81,7 +81,7 @@ angular.module("fireUI.textArea", [] )
         ;
 
         // scope
-        scope.$watch ( 'bind', function ( val, old ) {
+        scope.$watch ( 'value', function ( val, old ) {
             area.val(val);
             adjust ( scope, element );
         });
@@ -103,7 +103,7 @@ angular.module("fireUI.textArea", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            bind: '=fiBind',
+            value: '=fiValue',
         },
         templateUrl: 'text-area/text-area.html',
         compile: compile,

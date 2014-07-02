@@ -120,7 +120,7 @@ span.space {
 
     <fire-ui-section fi-title="My Section">
         <div class="flex-row">
-            <fire-ui-checkbox fi-bind="myChecked"></fire-ui-checkbox>                                              
+            <fire-ui-checkbox fi-value="myChecked"></fire-ui-checkbox>                                              
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="myCheckedClick()">Change</fire-ui-button> 
             <span class="space"></span>                                                                            
@@ -129,7 +129,7 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">
-            <fire-ui-unit-input fi-bind="myPixel" fi-type="int" fi-unit="px"></fire-ui-unit-input>                   
+            <fire-ui-unit-input fi-value="myPixel" fi-type="int" fi-unit="px"></fire-ui-unit-input>                   
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="myPixelClick()">Change</fire-ui-button>
             <span class="space"></span>                                                                            
@@ -138,7 +138,7 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">
-            <fire-ui-text-input fi-bind="myText"></fire-ui-text-input>                                                      
+            <fire-ui-text-input fi-value="myText"></fire-ui-text-input>                                                      
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="myTextClick()">Change</fire-ui-button>
             <span class="space"></span>                                                                            
@@ -147,7 +147,7 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">
-            <fire-ui-select fi-bind="mySelect" fi-options="mySelectList"></fire-ui-select>                         
+            <fire-ui-select fi-value="mySelect" fi-options="mySelectList"></fire-ui-select>                         
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="mySelectClick()">Change</fire-ui-button>
             <span class="space"></span>                                                                            
@@ -156,7 +156,7 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">
-            <fire-ui-color fi-bind="myColor"></fire-ui-color>                                                      
+            <fire-ui-color fi-value="myColor"></fire-ui-color>                                                      
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="myColorClick()">Change</fire-ui-button>
             <span class="space"></span>                                                                            
@@ -165,7 +165,7 @@ span.space {
         <span class="space"></span>
 
         <div class="flex-row">
-            <fire-ui-vec2 fi-bind="myVec2"></fire-ui-vec2>                                                      
+            <fire-ui-vec2 fi-value="myVec2"></fire-ui-vec2>                                                      
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="myVec2Click()">Change</fire-ui-button>
             <span class="space"></span>                                                                            
@@ -174,7 +174,7 @@ span.space {
         <span class="space"></span>                                                                            
 
         <div class="flex-row">                                                                                              
-            <fire-ui-text-area class="flex-3" fi-bind="myMultiText"></fire-ui-text-area>                                                        
+            <fire-ui-text-area class="flex-3" fi-value="myMultiText"></fire-ui-text-area>                                                        
             <span class="space"></span>                                                                            
             <fire-ui-button ng-click="myMultiTextClick()">Change</fire-ui-button>                                       
             <span class="space"></span>                                                                            
@@ -197,13 +197,13 @@ span.space {
     <span class="space" style="height: 20px"></span>                                                       
 
     <fire-ui-section fi-title="My Section 2">
-        <fire-ui-field fi-bind="myChecked"></fire-ui-field>                                                             
-        <fire-ui-field fi-bind="myPixel"></fire-ui-field>                                                             
-        <fire-ui-field fi-bind="mySelect" fi-type="enum" fi-enum-type="FIRE.Atlas.SortBy"></fire-ui-field>                                                             
-        <fire-ui-field fi-bind="myColor"></fire-ui-field>                                                             
-        <fire-ui-field fi-bind="myVec2"></fire-ui-field>                                                             
-        <fire-ui-field fi-bind="myText"></fire-ui-field>                                                             
-        <fire-ui-field fi-bind="myMultiText" fi-text-mode="multi"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="myChecked"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="myPixel"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="mySelect" fi-type="enum" fi-enum-type="FIRE.Atlas.SortBy"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="myColor"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="myVec2"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="myText"></fire-ui-field>                                                             
+        <fire-ui-field fi-value="myMultiText" fi-text-mode="multi"></fire-ui-field>                                                             
     </fire-ui-section>
 </div>
 </body>

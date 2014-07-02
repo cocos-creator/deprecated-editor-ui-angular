@@ -13,23 +13,24 @@ angular.module("fireUI.section", [] )
 
         scope.folded = false;
 
-        title.on ( 'click', function ( event ) {
+        title
+        .on ( 'click', function ( event ) {
             scope.folded = !scope.folded;
             body.toggleClass('hide', scope.folded);
             foldIcon.toggleClass('fa-caret-down', !scope.folded);
             foldIcon.toggleClass('fa-caret-right', scope.folded);
         })
-        .on ( 'focusin', function ( event ) {
-            title.addClass('focused');
+        .on ( 'focus', function ( event ) {
+            element.addClass('focused');
         })
-        .on ( 'focusout', function ( event ) {
-            if ( title.hasClass('focused') === false )
+        .on ( 'blur', function ( event ) {
+            if ( element.hasClass('focused') === false )
                 return;
 
             if ( title.find( event.relatedTarget ).length )
                 return;
             
-            title.removeClass('focused');
+            element.removeClass('focused');
         })
         ;
 

@@ -48,7 +48,7 @@ angular.module("fireUI.select", [] )
         .on('focus', function() {
             element.addClass('focused');
         })
-        .on('blur', function () {
+        .on('focusout', function () {
             if ( element.hasClass('focused') === false )
                 return;
 
@@ -81,7 +81,7 @@ angular.module("fireUI.select", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            value: '=fiBind',
+            value: '=fiValue',
             options: '=fiOptions',
         },
         templateUrl: 'select/select.html',

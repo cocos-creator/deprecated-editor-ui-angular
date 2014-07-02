@@ -8,11 +8,11 @@ angular.module("fireUI.colorPicker", [
     }
 
     function postLink ( scope, element, attrs ) {
-        scope.hsv = scope.color.toHSV();
+        scope.hsv = scope.value.toHSV();
         scope.rgb = {
-            r: scope.color.r * 255 | 0 ,
-            g: scope.color.g * 255 | 0 ,
-            b: scope.color.b * 255 | 0 ,
+            r: scope.value.r * 255 | 0 ,
+            g: scope.value.g * 255 | 0 ,
+            b: scope.value.b * 255 | 0 ,
         };
         var editingHSV = false;
 
@@ -45,20 +45,20 @@ angular.module("fireUI.colorPicker", [
             'rgb.g', 
             'rgb.b', 
         ], function ( val, old ) {
-            scope.color.r = val[0]/255;
-            scope.color.g = val[1]/255;
-            scope.color.b = val[2]/255;
+            scope.value.r = val[0]/255;
+            scope.value.g = val[1]/255;
+            scope.value.b = val[2]/255;
         }); 
 
         scope.$watchGroup ( [
-            'color.r', 
-            'color.g', 
-            'color.b', 
+            'value.r', 
+            'value.g', 
+            'value.b', 
         ], function ( val, old ) {
             scope.rgb = {
-                r: scope.color.r * 255 | 0,
-                g: scope.color.g * 255 | 0,
-                b: scope.color.b * 255 | 0,
+                r: scope.value.r * 255 | 0,
+                g: scope.value.g * 255 | 0,
+                b: scope.value.b * 255 | 0,
             };
             if ( !editingHSV ) {
                 scope.hsv = FIRE.rgb2hsv( val[0], val[1], val[2] );
@@ -66,7 +66,7 @@ angular.module("fireUI.colorPicker", [
             }
         }); 
 
-        scope.$watch ( 'color.a', function () {
+        scope.$watch ( 'value.a', function () {
             updateColor();
         });
 
@@ -90,7 +90,7 @@ angular.module("fireUI.colorPicker", [
                 updateColor();
                 scope.$apply( function () {
                     var h = Math.round( scope.hsv.h * 100.0 )/100.0;
-                    scope.color.fromHSV( h, scope.hsv.s, scope.hsv.v );
+                    scope.value.fromHSV( h, scope.hsv.s, scope.hsv.v );
                 });
             };
             updateMouseMove(event);
@@ -132,7 +132,7 @@ angular.module("fireUI.colorPicker", [
                 updateColor();
                 scope.$apply( function () {
                     var h = Math.round( scope.hsv.h * 100.0 )/100.0;
-                    scope.color.fromHSV( h, scope.hsv.s, scope.hsv.v );
+                    scope.value.fromHSV( h, scope.hsv.s, scope.hsv.v );
                 });
             };
             updateMouseMove(event);
@@ -163,7 +163,7 @@ angular.module("fireUI.colorPicker", [
                 offsetY = Math.max( Math.min( offsetY, 1.0 ), 0.0 );
 
                 scope.$apply( function () {
-                    scope.color.a = 1.0-offsetY;
+                    scope.value.a = 1.0-offsetY;
                 });
             };
             updateMouseMove(event);
@@ -195,7 +195,7 @@ angular.module("fireUI.colorPicker", [
         restrict: 'E',
         replace: true,
         scope: {
-            color: '=fiColor',
+            value: '=fiValue',
         },
         templateUrl: 'color-picker/color-picker.html',
         compile: compile,

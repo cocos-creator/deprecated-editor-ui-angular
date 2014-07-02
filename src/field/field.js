@@ -20,7 +20,7 @@ angular.module("fireUI.field", [
 
     function postLink (scope, element, attrs) {
         // do dom transform
-        var typename = typeof scope.bind;
+        var typename = typeof scope.value;
 
         // NOTE: if we write the fire-ui-label html codes directly in field.html, we can not
         // get compiled labelEL here through element.find('#label').
@@ -38,49 +38,49 @@ angular.module("fireUI.field", [
                         scope.finalEnumList = scope.enumList.slice(0);
                     }
                     labelEL = compileLabelEL(scope,'flex-1');
-                    fieldEL = $compile( "<fire-ui-select class='flex-2' fi-bind='bind' fi-options='finalEnumList'></fire-ui-select>" )( scope );      
+                    fieldEL = $compile( "<fire-ui-select class='flex-2' fi-value='value' fi-options='finalEnumList'></fire-ui-select>" )( scope );      
                 }
                 else if ( scope.type === 'int' ) {
                     labelEL = compileLabelEL(scope,'flex-1');
-                    fieldEL = $compile( "<fire-ui-unit-input class='flex-2' fi-type='int' fi-bind='bind'></fire-ui-unit-input>" )( scope );
+                    fieldEL = $compile( "<fire-ui-unit-input class='flex-2' fi-type='int' fi-value='value'></fire-ui-unit-input>" )( scope );
                 }
                 else if ( scope.type === 'float' ) {
                     labelEL = compileLabelEL(scope,'flex-1');
-                    fieldEL = $compile( "<fire-ui-unit-input class='flex-2' fi-type='float' fi-bind='bind'></fire-ui-unit-input>" )( scope );
+                    fieldEL = $compile( "<fire-ui-unit-input class='flex-2' fi-type='float' fi-value='value'></fire-ui-unit-input>" )( scope );
                 }
                 break;
 
             case "boolean":
                 labelEL = compileLabelEL(scope,'flex-1');
-                fieldEL = $compile( "<fire-ui-checkbox class='flex-2' fi-bind='bind'></fire-ui-checkbox>" )( scope );
+                fieldEL = $compile( "<fire-ui-checkbox class='flex-2' fi-value='value'></fire-ui-checkbox>" )( scope );
                 break;
 
             case "string":
                 if ( scope.textMode === 'single' ) {
                     labelEL = compileLabelEL(scope,'flex-1');
-                    fieldEL = $compile( "<fire-ui-text-input class='flex-2' fi-bind='bind'></fire-ui-text-input>" )( scope );
+                    fieldEL = $compile( "<fire-ui-text-input class='flex-2' fi-value='value'></fire-ui-text-input>" )( scope );
                 }
                 else if ( scope.textMode === 'multi' ) {
                     labelEL = compileLabelEL(scope,'flex-1 flex-align-self-start');
-                    fieldEL = $compile( "<fire-ui-text-area class='flex-2' fi-bind='bind'></fire-ui-text-area>" )( scope );
+                    fieldEL = $compile( "<fire-ui-text-area class='flex-2' fi-value='value'></fire-ui-text-area>" )( scope );
                 }
                 break;
 
             case "object":
-                if ( Array.isArray(scope.bind) ) {
+                if ( Array.isArray(scope.value) ) {
                     // TODO
                 }
                 else {
-                    var className = FIRE.getClassName(scope.bind);
+                    var className = FIRE.getClassName(scope.value);
                     switch ( className ) {
                         case "FIRE.Color":
                             labelEL = compileLabelEL(scope,'flex-1');
-                            fieldEL = $compile( "<fire-ui-color class='flex-2' fi-bind='bind'></fire-ui-color>" )( scope );
+                            fieldEL = $compile( "<fire-ui-color class='flex-2' fi-value='value'></fire-ui-color>" )( scope );
                             break;
 
                         case "FIRE.Vec2":
                             labelEL = compileLabelEL(scope,'flex-1');
-                            fieldEL = $compile( "<fire-ui-vec2 class='flex-2' fi-bind='bind'></fire-ui-vec2>" )( scope );
+                            fieldEL = $compile( "<fire-ui-vec2 class='flex-2' fi-value='value'></fire-ui-vec2>" )( scope );
                             break;
                     }
                 }
@@ -129,7 +129,7 @@ angular.module("fireUI.field", [
     }
 
     function compile ( element, attrs ) {
-        attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : FIRE.camelCaseToHuman(attrs.fiBind);
+        attrs.fiName = (attrs.fiName!==undefined) ? attrs.fiName : FIRE.camelCaseToHuman(attrs.fiValue);
         attrs.fiType = (attrs.fiType!==undefined) ? attrs.fiType : 'int';
         attrs.fiEnumType = (attrs.fiEnumType!==undefined) ? attrs.fiEnumType : '';
         attrs.fiTextMode = (attrs.fiTextMode!==undefined) ? attrs.fiTextMode : 'single';
@@ -144,7 +144,7 @@ angular.module("fireUI.field", [
         restrict: 'E',
         replace: true,
         scope: {
-            bind: '=fiBind',
+            value: '=fiValue',
             name: '@fiName',
             type: '@fiType',
             enumType: '@fiEnumType',

@@ -8,12 +8,12 @@ angular.module("fireUI.textInput", [] )
 
     function postLink ( scope, element, attrs ) {
         var input = element.children('#input');
-        input.val(scope.bind);
+        input.val(scope.value);
 
         // input
         input
         .on ( 'input', function (event) {
-            scope.bind = input.val();
+            scope.value = input.val();
             scope.$apply();
 
             return false;
@@ -25,30 +25,26 @@ angular.module("fireUI.textInput", [] )
             switch ( event.which ) {
                 // enter
                 case 13:
-                    scope.bind = input.val();
+                    scope.value = input.val();
                     scope.$apply();
-                    input.val(scope.bind);
+                    input.val(scope.value);
                     input.blur(); 
                 return false;
 
                 // esc
                 case 27:
-                    scope.bind = scope.lastVal;
+                    scope.value = scope.lastVal;
                     scope.$apply();
-                    input.val(scope.bind);
+                    input.val(scope.value);
                     input.blur(); 
                 return false;
             }
         } )
-        ;
-
-        // element
-        element
-        .on('focusin', function(event) {
-            scope.lastVal = scope.bind;
+        .on('focus', function(event) {
+            scope.lastVal = scope.value;
             element.addClass('focused');
         })
-        .on('focusout', function(event) {
+        .on('blur', function(event) {
             if ( element.hasClass('focused') === false )
                 return;
 
@@ -57,7 +53,7 @@ angular.module("fireUI.textInput", [] )
                 return;
             
             var val = input.val();
-            scope.bind = val;
+            scope.value = val;
             scope.$apply();
             input.val(val);
 
@@ -66,7 +62,7 @@ angular.module("fireUI.textInput", [] )
         ;
 
         // scope
-        scope.$watch ( 'bind', function ( val, old ) {
+        scope.$watch ( 'value', function ( val, old ) {
             input.val(val);
         });
 
@@ -87,7 +83,7 @@ angular.module("fireUI.textInput", [] )
         restrict: 'E',
         replace: true,
         scope: {
-            bind: '=fiBind',
+            value: '=fiValue',
         },
         templateUrl: 'text-input/text-input.html',
         compile: compile,

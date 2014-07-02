@@ -18,8 +18,8 @@ angular.module("fireUI.color", [
         var ngPromise = null;
 
         var updateColor = function () {
-            previewRGB.style.backgroundColor = scope.bind.toCSS('rgb');
-            previewA.style.width = Math.floor(scope.bind.a * 100)+'%';
+            previewRGB.style.backgroundColor = scope.value.toCSS('rgb');
+            previewA.style.width = Math.floor(scope.value.a * 100)+'%';
         };
 
         updateColor();
@@ -50,7 +50,7 @@ angular.module("fireUI.color", [
             }
 
             if ( ngColorPicker === null ) {
-                ngColorPicker = $compile( "<fire-ui-color-picker fi-color='bind'></fire-ui-color-picker>" )( scope );
+                ngColorPicker = $compile( "<fire-ui-color-picker fi-value='value'></fire-ui-color-picker>" )( scope );
                 jqBorder.append( ngColorPicker[0] );
             }
 
@@ -77,10 +77,10 @@ angular.module("fireUI.color", [
         };
 
         scope.$watchGroup ( [
-            'bind.r', 
-            'bind.g', 
-            'bind.b', 
-            'bind.a'
+            'value.r', 
+            'value.g', 
+            'value.b', 
+            'value.a'
         ], function ( val, old ) {
             updateColor();
         }); 
@@ -134,7 +134,7 @@ angular.module("fireUI.color", [
         restrict: 'E',
         replace: true,
         scope: {
-            bind: '=fiBind',
+            value: '=fiValue',
         },
         templateUrl: 'color/color.html',
         compile: compile,

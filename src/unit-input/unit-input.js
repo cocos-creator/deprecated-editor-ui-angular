@@ -47,7 +47,7 @@ angular.module("fireUI.unitInput", [] )
             console.log("can't find proper type for " + scope.type);
             return val;
         };
-        input.val(convert(scope.bind));
+        input.val(convert(scope.value));
 
         // input
         input
@@ -65,7 +65,7 @@ angular.module("fireUI.unitInput", [] )
             }
 
             var val = convert(input.val());
-            scope.bind = val;
+            scope.value = val;
             scope.$apply();
 
             return false;
@@ -77,23 +77,23 @@ angular.module("fireUI.unitInput", [] )
             switch ( event.which ) {
                 // enter
                 case 13:
-                    scope.bind = convert(input.val());
+                    scope.value = convert(input.val());
                     scope.$apply();
-                    input.val(scope.bind);
+                    input.val(scope.value);
                     input.blur(); 
                 return false;
 
                 // esc
                 case 27:
-                    scope.bind = convert(scope.lastVal);
+                    scope.value = convert(scope.lastVal);
                     scope.$apply();
-                    input.val(scope.bind);
+                    input.val(scope.value);
                     input.blur(); 
                 return false;
             }
         } )
         .on('focus', function(event) {
-            scope.lastVal = scope.bind;
+            scope.lastVal = scope.value;
             element.addClass('focused');
         })
         .on('blur', function(event) {
@@ -104,7 +104,7 @@ angular.module("fireUI.unitInput", [] )
                 return;
             
             var val = convert(input.val());
-            scope.bind = val;
+            scope.value = val;
             scope.$apply();
             input.val(val);
 
@@ -118,18 +118,18 @@ angular.module("fireUI.unitInput", [] )
         };
 
         scope.onIncrease = function ( event ) {
-            scope.bind = convert( scope.bind + interval );
+            scope.value = convert( scope.value + interval );
             input.focus();
             event.stopPropagation();
         };
 
         scope.onDecrease = function ( event ) {
-            scope.bind = convert( scope.bind - interval );
+            scope.value = convert( scope.value - interval );
             input.focus();
             event.stopPropagation();
         };
 
-        scope.$watch ( 'bind', function ( val, old ) {
+        scope.$watch ( 'value', function ( val, old ) {
             input.val(convert(val));
         });
 
@@ -173,7 +173,7 @@ angular.module("fireUI.unitInput", [] )
             min: '@fiMin',
             max: '@fiMax',
             interval: '@fiInterval',
-            bind: '=fiBind',
+            value: '=fiValue',
         },
         templateUrl: 'unit-input/unit-input.html',
         compile: compile,
