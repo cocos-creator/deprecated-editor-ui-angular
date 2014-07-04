@@ -10,7 +10,7 @@ angular.module("fireUI.customField", [] )
 
         // NOTE: if we write the fire-ui-label html codes directly in field.html, we can not
         // get compiled labelEL here through element.find('#label').
-        var labelEL = $compile( "<fire-ui-label id='label'>{{name}}</fire-ui-label>" )( scope );
+        var labelEL = $compile( "<fire-ui-label id='label' class='flex-1'>{{name}}</fire-ui-label>" )( scope );
         element.prepend(labelEL);
 
         // element

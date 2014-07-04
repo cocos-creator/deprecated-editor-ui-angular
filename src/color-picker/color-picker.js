@@ -28,7 +28,7 @@ angular.module("fireUI.colorPicker", [
             cssRGB = "rgb("+ (cssRGB.r*255|0) + "," + (cssRGB.g*255|0) + "," + (cssRGB.b*255|0) + ")";
             colorPanel.css( "background-color", cssRGB );
             opacityPanel.css( "background-color", cssRGB );
-            opacityHandle.css( "top", (1.0-scope.color.a)*100 + "%" );
+            opacityHandle.css( "top", (1.0-scope.value.a)*100 + "%" );
 
             hueHandle.css( "top", (1.0-scope.hsv.h)*100 + "%" );
             colorHandle.css({
