@@ -19,6 +19,8 @@ angular.module("fireUI.section", [] )
             body.toggleClass('hide', scope.folded);
             foldIcon.toggleClass('fa-caret-down', !scope.folded);
             foldIcon.toggleClass('fa-caret-right', scope.folded);
+
+            return false;
         })
         .on ( 'focus', function ( event ) {
             element.addClass('focused');
