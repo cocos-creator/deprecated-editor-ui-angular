@@ -26,12 +26,13 @@ angular.module("fireUI.field", [
         // get compiled labelEL here through element.find('#label').
         var labelEL = null;
         var fieldEL = null;
+        var enumTypeDef = null;
 
         switch ( typename ) {
             case "number":
                 if ( scope.type === 'enum' ) {
                     if ( scope.enumType !== undefined && scope.enumType !== '' ) {
-                        var enumTypeDef = FIRE.getVarFrom(window,scope.enumType);
+                        enumTypeDef = FIRE.getVarFrom(window,scope.enumType);
                         scope.finalEnumList = FIRE.getEnumList(enumTypeDef);
                     }
                     else {
@@ -56,7 +57,18 @@ angular.module("fireUI.field", [
                 break;
 
             case "string":
-                if ( scope.textMode === 'single' ) {
+                if ( scope.type === 'enum' ) {
+                    if ( scope.enumType !== undefined && scope.enumType !== '' ) {
+                        enumTypeDef = FIRE.getVarFrom(window,scope.enumType);
+                        scope.finalEnumList = FIRE.getEnumList(enumTypeDef);
+                    }
+                    else {
+                        scope.finalEnumList = scope.enumList.slice(0);
+                    }
+                    labelEL = compileLabelEL(scope,'flex-1');
+                    fieldEL = $compile( "<fire-ui-select class='flex-2' fi-value='value' fi-options='finalEnumList'></fire-ui-select>" )( scope );      
+                }
+                else if ( scope.textMode === 'single' ) {
                     labelEL = compileLabelEL(scope,'flex-1');
                     fieldEL = $compile( "<fire-ui-text-input class='flex-2' fi-value='value'></fire-ui-text-input>" )( scope );
                 }
