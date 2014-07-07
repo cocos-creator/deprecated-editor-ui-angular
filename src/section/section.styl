@@ -1,5 +1,5 @@
 .fire-ui-section {                         
-    .title {
+    &>.title {
         font-family: Arial
         padding: 8px
         font-size: 10px
@@ -14,20 +14,16 @@
         color: #b1b1b1
         cursor: pointer 
 
-        &.focused {
-            color: #00a6ff
-        }
-
         i {
             width: 10px
         }
     }
 
-    &.focused .title {
+    &.focused>.title {
         color: #00a6ff
     }
 
-    .body {
+    &>.body {
         duration = .2s
 
         display: block
